@@ -1,9 +1,7 @@
 .cardContent{
     --bs-gradient: linear-gradient(75deg, rgba(212, 11, 11, 0.15), rgba(165, 33, 33, 0), rgba(212, 11, 11, 0.15)); 
 }
-.cardImgLeft{
-    ,bor
-}
+
 .grass{
     width: 3px;
     
