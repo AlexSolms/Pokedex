@@ -1,0 +1,31 @@
+.cardContent{
+    --bs-gradient: linear-gradient(75deg, rgba(212, 11, 11, 0.15), rgba(165, 33, 33, 0), rgba(212, 11, 11, 0.15)); 
+}
+.cardImgLeft{
+    ,bor
+}
+.grass{
+    width: 3px;
+    
+    background-color: #7AC74C;
+}
+
+.poison{
+    width: 3px;
+    background-color: #A33EA1;
+}
+ .fire{
+    width: 3px;
+    background-color: #EE8130;
+ }
+ .flying{
+    width: 3px;
+    background-color: #A98FF3;
+
+ }
+ .myStartClass{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+ }
