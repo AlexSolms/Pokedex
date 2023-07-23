@@ -1,26 +1,28 @@
 const POKE_API = [];
 let responseJson20Buket = '';
-let url = ''
-let pokemonNr = 0
+let url = '';
+let pokemonNr = 0;
+let STATS_DATA = {};
 
 async function loadPokeApi(pokemonNr) {
 
     let url20Buket = 'https://pokeapi.co/api/v2/pokemon/';
     let response20Buket = await fetch(url20Buket);
+    
     responseJson20Buket = await response20Buket.json();
-
+    console.log(responseJson20Buket);
     url = responseJson20Buket.results[pokemonNr].url; /* 'https://pokeapi.co/api/v2/pokemon/' + */
     let response = await fetch(url);
     let responseJson = await response.json();
 
-    let urlDE = responseJson20Buket.results[pokemonNr].url + '?language=de';
+    let urlStats = `https://pokeapi.co/api/v2/pokemon/${responseJson.name}`; //responseJson20Buket.results[pokemonNr].url?stats; // + '?language=de'
     //console.log(urlDE);
-    let responseDE = await fetch(urlDE);
-    let responseJsonDE = await responseDE.json();
+    let responseStats = await fetch(urlStats);
+    STATS_DATA = await responseStats.json();
 
 
-    console.log(responseJson);
-    // console.log(responseJsonDE.name); 
+    
+    console.log(STATS_DATA.stats[1]); 
 
     document.getElementById('start').innerHTML = cardHtml(responseJson);
     leftBorder(responseJson.types[0].type.name);
@@ -57,7 +59,7 @@ function cardHtml(responseJson) {
             <div class="cardStats card-text">
                 <div class="firstInfo" id="info1"><span>ability 1: ${ability(responseJson.abilities, 0)}</span>
                 <span>ability 2: ${ability(responseJson.abilities, 1)}</span></div>
-                <div class="secondInfo" id="info2">${''}</div>
+                <div class="secondInfo" id="info2">${getStats()}</div>
                 <div class="thirdInfo" id="info3">${''}</div>
                 <div class="fourthInfo" id="info4">${''}</div>
            
@@ -98,79 +100,16 @@ function ability(key, index) {
     }  
 }
 
-
-
-
-/* const base_url = 'https://pokeapi.co/api/v2/pokemon-species/';
-
-// Pokémon-IDs der ersten drei Pokémon (Bisasam, Bisaknosp, Bisaflor)
-const pokemon_ids = [1, 2, 3];
-
-async function getGermanNames() {
-  for (const pokemon_id of pokemon_ids) {
-    try {
-      const response = await fetch(`${base_url}${pokemon_id}`);
-      const data = await response.json();
-console.log(data);
-      // Überprüfen, ob die benötigten Eigenschaften vorhanden sind
-      if (data && data.names) {
-        const german_name = data.names.find(name => name.language.name === 'de');
-        if (german_name) {
-          console.log(`Deutscher Name von Pokémon ${pokemon_id}: ${german_name.name}`);
-        } else {
-          console.log(`Deutscher Name von Pokémon ${pokemon_id} nicht verfügbar.`);
-        }
-      } else {
-        console.log(`Daten für Pokémon ${pokemon_id} nicht verfügbar.`);
-      }
-    } catch (error) {
-      console.error(`Fehler beim Abrufen der Daten für Pokémon ${pokemon_id}: ${error.message}`);
-    }
+function getStats() {
+  let htmlStats ='';
+  for (let i = 0; i < STATS_DATA.stats.length; i++) {
+    let statName = STATS_DATA.stats[i].stat.name;
+    let statValue = STATS_DATA.stats[i].base_stat;
+    htmlStats += `<div>${statName}: ${statValue}</div>`;
+    console.log(statName + ': ' + statValue);
+    
   }
+  console.log(htmlStats);
+  return htmlStats;
+  
 }
-
-getGermanNames();
-
-
-
- */
-
-
-
-
-const base_url = 'https://pokeapi.co/api/v2/ability/8'; //'https://pokeapi.co/api/v2/pokemon-species/';
-
-// Pokémon-IDs der ersten drei Pokémon (Bisasam, Bisaknosp, Bisaflor)
-const pokemon_ids = [1, 2, 3];
-
-async function getGermanNames() {
-  for (const pokemon_id of pokemon_ids) {
-    try {
-      const response = await fetch(`${base_url}`); //${pokemon_id}
-      const data = await response.json();
-      console.log(data);
-      // Überprüfen, ob die benötigten Eigenschaften vorhanden sind
-      if (data && data.names) {
-        let german_name = null;
-        for (const name of data.names) {
-          if (name.language.name === 'de') {
-            german_name = name.name;
-            break;
-          }
-        }
-
-        if (german_name) {
-          console.log(`Deutscher Name von Pokémon ${pokemon_id}: ${german_name}`);
-        } else {
-          console.log(`Deutscher Name von Pokémon ${pokemon_id} nicht verfügbar.`);
-        }
-      } else {
-        console.log(`Daten für Pokémon ${pokemon_id} nicht verfügbar.`);
-      }
-    } catch (error) {
-      console.error(`Fehler beim Abrufen der Daten für Pokémon ${pokemon_id}: ${error.message}`);
-    }
-  }
-}
-
-getGermanNames();
