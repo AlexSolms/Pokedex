@@ -10,11 +10,10 @@
 	text-orientation: upright;
    display: flex;
    align-items: center;
+   justify-content: space-around;
+   cursor: pointer;
 }
 
-.typeContainer{
-	
-}
 
 
 .grass{background-color: #7AC74C;}

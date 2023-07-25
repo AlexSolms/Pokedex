@@ -23,9 +23,7 @@
 <button onclick="getStats()">klick</button>
 
     <!-- <button class="btn" onclick="loadPokeApi()">get data</button>-->
-    <div id="start" class="myStartClass"> 
-        
-    
+    <div id="start" class="myStartClass">
     <section class="container">
         <div id="idCardContent" class=" cardContent card pt-2 bg-dark bg-gradient text-white">
             <div class="" >
@@ -33,21 +31,27 @@
                     <h3 class="pokeName card-title" id="namePoke"></h3>
                 </div>
                 <div id="idCardImgContainer" class="  cardImgContainer">
-                    <div id="idLeftButton" class="leftButton">
+                    <!-- <div id="idLeftButton" class="leftButton">
                         <div class="" onclick="prevPokemon()">&#x21a2;</div>
-                    </div>
+                    </div> -->
                     <div id="idCardImgContainerInner" class="gap-4 d-flex justify-content-between">
-                        <div id="cardImgLeft" class="">
+                        <div id="cardImgLeft" class="" onclick="prevPokemon()">
+                            <span>&#x21a2;</span>
+                            <span id="cardImgLeftText"></span>
+                            <span>&#x21a2;</span>
                         </div>
                         <div class="">
                             <img id="pokeImg" class="img card-img" src="" alt="">
                         </div> 
-                        <div id="cardImgRight" class=""> 
+                        <div id="cardImgRight" class="" onclick="nextPokemon()">
+                            <span>&#x21a3;</span>
+                            <span id="cardImgRightText"></span>
+                            <span>&#x21a3;</span>
                         </div>
                     </div>
-                    <div id="idRightButton" class="rightButton">
+                    <!-- <div id="idRightButton" class="rightButton">
                         <div class="" onclick="nextPokemon()">&#x21a3;</div>
-                    </div>                
+                    </div>        -->         
                 </div>
                 <div class="cardStats card-text">
                     <div class="firstInfo" id="info1">Abilities: <br><span>ability 1: </span><span id="ability1"></span>
