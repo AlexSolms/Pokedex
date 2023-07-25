@@ -3,25 +3,40 @@
 
 }
 
-.grass{
-    width: 3px;
-    
-    background-color: #7AC74C;
+.typeContainer{
+   width: 48px;
+   border-radius: 16px;
+   writing-mode: vertical-rl;
+	text-orientation: upright;
+   display: flex;
+   align-items: center;
 }
 
-.poison{
-    width: 3px;
-    background-color: #A33EA1;
+.typeContainer{
+	
 }
- .fire{
-    width: 3px;
-    background-color: #EE8130;
- }
- .flying{
-    width: 3px;
-    background-color: #A98FF3;
 
- }
+
+.grass{background-color: #7AC74C;}
+.poison{background-color: #A33EA1;}
+.fire{background-color: #EE8130;}
+.flying{background-color: #A98FF3;}
+.normal{background-color: #A8A77A;}
+.water{background-color: #6390F0;}
+.electric{background-color: #F7D02C;}
+.ice{background-color: #96D9D6;}
+.fighting{background-color: #C22E28;}
+.ground{background-color: #E2BF65;}
+.psychic{background-color: #F95587;}
+.bug{background-color: #A6B91A;}
+.rock{background-color: #B6A136;}
+.ghost{background-color: #735797;}
+.dragon{background-color: #6F35FC;}
+.dark{background-color: #705746;}
+.steel{background-color: #B7B7CE;}
+.fairy{background-color: #D685AD;}
+
+
  .myStartClass{
     display: flex;
     align-items: center;
@@ -33,14 +48,15 @@
     position: relative;
  }
  .leftButton{
+   
     position: absolute;
     top: 50%;
-    right: 90%;
+    right: 95%;
  }
  .rightButton{
     position: absolute;
     top: 50%;
-    left: 90%;
+    left: 95%;
  }
 
   .img{
