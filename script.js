@@ -10,7 +10,7 @@ async function loadPokeApi(pokemonNr) {
     let response20Buket = await fetch(url20Buket);
     
     responseJson20Buket = await response20Buket.json();
-    console.log(responseJson20Buket);
+    //console.log(responseJson20Buket);
     url = responseJson20Buket.results[pokemonNr].url; /* 'https://pokeapi.co/api/v2/pokemon/' + */
     let response = await fetch(url);
     let responseJson = await response.json();
@@ -22,7 +22,7 @@ async function loadPokeApi(pokemonNr) {
 
 
     
-    console.log(STATS_DATA.stats[1]); 
+    //console.log(STATS_DATA.stats[1]); 
 
     cardHtml(responseJson); // das muss ich ändern. Ich will die Karte ansind in HTML schreiben und nur die Werte übergeben
     
@@ -55,21 +55,27 @@ function typeBorders(responseJson) {
 }
 
 function leftBorder(pokeType1) {
-   // document.getElementById('cardImgLeft').classList.remove(...element.classList);
-    document.getElementById('cardImgLeft').classList.add(pokeType1);
+    document.getElementById('cardImgLeft').className = '';
+    document.getElementById('cardImgLeft').classList.add(pokeType1, 'typeContainer');
+    document.getElementById('cardImgLeft').innerText = pokeType1;
+    console.log(pokeType1);
     
 }
 function rightBorder(pokeType, length) {
     if (length > 1) {
-        document.getElementById('cardImgRight').classList.add(pokeType[1].type.name);
+      document.getElementById('cardImgRight').className = '';
+        document.getElementById('cardImgRight').classList.add(pokeType[1].type.name, 'typeContainer');
+        document.getElementById('cardImgRight').innerText = pokeType[1].type.name;
     } else {
-        document.getElementById('cardImgRight').classList.add(pokeType[0].type.name);
+      document.getElementById('cardImgRight').className = '';
+        document.getElementById('cardImgRight').classList.add(pokeType[0].type.name, 'typeContainer');
+        document.getElementById('cardImgRight').innerText = pokeType[0].type.name;
     }   
 }
 
 function PokeAbility(key) { // checken ob der Code hier so passt, oder ob das nicht zu viel ist
     if (key[0]) {
-        console.log(key[0].ability.name);
+        //console.log(key[0].ability.name);
         document.getElementById('ability1').innerText = key[0].ability.name;
     } 
     if(key[1]) {
@@ -94,7 +100,7 @@ function getStats() {
 // Function to create and render the radar chart
 function createRadarChart() {
     const STATS_ARRAY = STATS_DATA.stats;
-    console.log(STATS_ARRAY);
+    //console.log(STATS_ARRAY);
     const ctx = document.getElementById('radarChart').getContext('2d');
     const chart = new Chart(ctx, {
       type: 'radar',
