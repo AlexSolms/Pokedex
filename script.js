@@ -24,52 +24,21 @@ async function loadPokeApi(pokemonNr) {
     
     console.log(STATS_DATA.stats[1]); 
 
-    document.getElementById('start').innerHTML = cardHtml(responseJson);
-    leftBorder(responseJson.types[0].type.name);
-    rightBorder(responseJson.types, responseJson.types.length)
-    // document.getElementById('start').innerText = responseTxt;
-
+    cardHtml(responseJson); // das muss ich ändern. Ich will die Karte ansind in HTML schreiben und nur die Werte übergeben
+    
 }
 
 
-function cardHtml(responseJson) {
-    return /*html*/ `<section class="container">
-    <div id="idCardContent" class="card cardContent p-3 bg-dark bg-gradient text-white">
-        <div class="" >
-            <div id="idCardhead" class="card-head text-center">
-                <h3 class="pokeName card-title" id="namePoke">${responseJson.name}</h3>
-            </div>
-            <div id="idCardImgContainer" class=" card-body cardImgContainer">
-                <div id="idLeftButton" class="leftButton">
-                    <div class="" onclick="prevPokemon()">&#x21a2;</div>
-                </div>
-                <div id="idCardImgContainerInner" class="gap-4 d-flex justify-content-between">
-                    <div id="cardImgLeft">
-                    </div>
-                    <div class="cardImage">
-                        <img class="img card-img" src=${responseJson.sprites.other['dream_world'].front_default} alt="">
-                    </div> 
-                    <div id="cardImgRight"> 
-                    </div>
-                </div>
-                <div id="idRightButton" class="rightButton">
-                    <div class="" onclick="nextPokemon()">&#x21a3;</div>
-                </div>                
-            </div>
-            <div class="cardStats card-text">
-                <div class="firstInfo" id="info1"><span>ability 1: ${ability(responseJson.abilities, 0)}</span>
-                <span>ability 2: ${ability(responseJson.abilities, 1)}</span></div>
-                <div class="secondInfo" id="info2">${getStats()}</div>
-                <div class="thirdInfo" id="info3">${''}</div>
-                <div class="fourthInfo" id="info4">${''}</div>
-           
-            </div>
-        </div>
-    </div>
-</section>`;
-    //src=${responseJson.sprites.other['official-artwork'].front_default}
-    // ${responseJson.sprites.back_default}  ${responseJson.moves[0].move.name} ${responseJson.moves[1].move.name}
+function cardHtml(responseJson){
+    document.getElementById('namePoke').innerText = responseJson.name;
+    typeBorders(responseJson);
+    PokeAbility(responseJson.abilities);
+    //document.getElementById('ability1').innerText = responseJson.abilities[0].ability.name;
+    document.getElementById('pokeImg').src = responseJson.sprites.other['dream_world'].front_default;
+     // Call the createRadarChart function to generate the chart
+  createRadarChart();
 }
+
 
 function nextPokemon() {
     pokemonNr++;
@@ -80,7 +49,13 @@ function prevPokemon() {
     loadPokeApi(pokemonNr);
 }
 
+function typeBorders(responseJson) {
+    leftBorder(responseJson.types[0].type.name);
+    rightBorder(responseJson.types, responseJson.types.length);    
+}
+
 function leftBorder(pokeType1) {
+   // document.getElementById('cardImgLeft').classList.remove(...element.classList);
     document.getElementById('cardImgLeft').classList.add(pokeType1);
     
 }
@@ -92,9 +67,13 @@ function rightBorder(pokeType, length) {
     }   
 }
 
-function ability(key, index) {
-    if (key[index]) {
-        return key[0].ability.name;
+function PokeAbility(key) { // checken ob der Code hier so passt, oder ob das nicht zu viel ist
+    if (key[0]) {
+        console.log(key[0].ability.name);
+        document.getElementById('ability1').innerText = key[0].ability.name;
+    } 
+    if(key[1]) {
+        document.getElementById('ability2').innerText = key[1].ability.name;
     } else {
         return  '';        
     }  
@@ -106,10 +85,56 @@ function getStats() {
     let statName = STATS_DATA.stats[i].stat.name;
     let statValue = STATS_DATA.stats[i].base_stat;
     htmlStats += `<div>${statName}: ${statValue}</div>`;
-    console.log(statName + ': ' + statValue);
-    
+    console.log(statName + ': ' + statValue);  
   }
   console.log(htmlStats);
   return htmlStats;
-  
 }
+
+// Function to create and render the radar chart
+function createRadarChart() {
+    const STATS_ARRAY = STATS_DATA.stats;
+    console.log(STATS_ARRAY);
+    const ctx = document.getElementById('radarChart').getContext('2d');
+    const chart = new Chart(ctx, {
+      type: 'radar',
+      data: {
+        labels: STATS_ARRAY.map(statName => statName.stat.name),
+        datasets: radarChartDataSets(STATS_ARRAY)
+      },
+      options: radarChartOptions()
+    });
+  }
+  
+ 
+  
+  function radarChartDataSets(STATS_ARRAY) {
+    return [{
+      label: 'Stats',
+      data: STATS_ARRAY.map(stat => stat.base_stat),
+      backgroundColor: 'rgba(54, 162, 235, 0.2)',
+      borderColor: 'rgba(54, 162, 235, 1)',
+      borderWidth: 0,
+      pointBackgroundColor: "rgba(54, 162, 235, 1)",
+      pointBorderColor: "#fff",
+      pointHoverBackgroundColor: "#fff",
+      pointHoverBorderColor: "rgba(54, 162, 235, 1)",
+      pointRadius: 0, //[0, 5, 10, 15, 20, 25], // Hier legen Sie die Größe der Datenpunkte fest
+      pointStyle: "circle" // Hier können Sie das Symbol der Datenpunkte anpassen 
+    }]
+  }
+  
+  function radarChartOptions() {
+    return {
+      animation: {
+        duration: 1000, // Dauer der Animation in Millisekunden
+        easing: "easeInOutBounce", // Easing-Funktion für das Bouncing (hier: Bounce-Effekt)
+      },
+      scale: {
+        ticks: {
+          beginAtZero: true,
+          max: 100,
+        }
+      }
+    }
+  }
