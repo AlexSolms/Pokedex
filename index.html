@@ -5,65 +5,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokedex</title>
-    
+
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
 
     <script src="script.js" defer></script>
-<script src="./Chart.js_2.8.0_Chart.min.js"></script>
-   
-    
+    <script src="./Chart.js_2.8.0_Chart.min.js"></script>
+
 
 <body onload="loadPokeApi(0)">
 
     <div id="tewntyBucket"> <!-- hier kommen die 20 Farten rein -->
 
     </div>
-<button onclick="getStats()">klick</button>
+    <!-- <button onclick="getStats()">klick</button> -->
 
-    <!-- <button class="btn" onclick="loadPokeApi()">get data</button>-->
+    
     <div id="start" class="myStartClass">
-    <section class="container">
-        <div id="idCardContent" class=" cardContent card pt-2 bg-dark bg-gradient text-white">
-            <div class="" >
-                <div id="idCardhead" class="card-head text-center">
-                    <h3 class="pokeName card-title" id="namePoke"></h3>
-                </div>
-                <div id="idCardImgContainer" class="  cardImgContainer">
-                    <!-- <div id="idLeftButton" class="leftButton">
-                        <div class="" onclick="prevPokemon()">&#x21a2;</div>
-                    </div> -->
-                    <div id="idCardImgContainerInner" class="gap-4 d-flex justify-content-between">
-                        <div id="cardImgLeft" class="" onclick="prevPokemon()">
-                            <span>&#x21a2;</span>
-                            <span id="cardImgLeftText"></span>
-                            <span>&#x21a2;</span>
-                        </div>
-                        <div class="">
-                            <img id="pokeImg" class="img card-img" src="" alt="">
-                        </div> 
-                        <div id="cardImgRight" class="" onclick="nextPokemon()">
-                            <span>&#x21a3;</span>
-                            <span id="cardImgRightText"></span>
-                            <span>&#x21a3;</span>
-                        </div>
+        <section class="container p-0 cardMaxWidth"> 
+            <div id="idCardContent" class=" cardContent card pt-2 bg-dark bg-gradient text-white">
+                <div class="">
+                    <div id="idCardhead" class="card-head text-center">
+                        <h3 class="pokeName card-title" id="namePoke"></h3>
                     </div>
-                    <!-- <div id="idRightButton" class="rightButton">
-                        <div class="" onclick="nextPokemon()">&#x21a3;</div>
-                    </div>        -->         
-                </div>
-                <div class="cardStats card-text">
-                    <div class="firstInfo" id="info1">Abilities: <br><span>ability 1: </span><span id="ability1"></span>
-                    <span>ability 2: <span id="ability2"></span></span></div>
-                    <div class="secondInfo" id="info2">Sats: <canvas id="radarChart"></canvas></div>
-                    <div class="thirdInfo" id="info3"></div>
-                    <div class="fourthInfo" id="info4"></div>
+                    <div id="idCardImgContainer" class="  cardImgContainer">
+
+                        <div id="idCardImgContainerInner" class="gap-4 d-flex justify-content-between">
+                            <div id="cardImgLeft" class="" onclick="prevPokemon()">
+                                <span>&#x21a2;</span>
+                                <span id="cardImgLeftText"></span>
+                                <span>&#x21a2;</span>
+                            </div>
+                            <div class="">
+                                <img id="pokeImg" class="img card-img" src="" alt="">
+                            </div>
+                            <div id="cardImgRight" class="" onclick="nextPokemon()">
+                                <span>&#x21a3;</span>
+                                <span id="cardImgRightText"></span>
+                                <span>&#x21a3;</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="cardStats card-text">
+                        <div class="firstInfo" id="info1">Abilities: <br><span>ability 1: </span><span
+                                id="ability1"></span>
+                            <span>ability 2: <span id="ability2"></span></span>
+                        </div>
+                        <div class="secondInfo" id="info2">Stats: <canvas id="polarChart"></canvas></div>
+                        <div class="thirdInfo" id="info3"></div>
+                        <div class="fourthInfo" id="info4"></div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section> 
-</div> 
+        </section>
+    </div>
 
 </body>
 

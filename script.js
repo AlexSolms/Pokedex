@@ -1,64 +1,91 @@
 const POKE_API = [];
 let responseJson20Buket = '';
 let url = '';
-let pokemonNr = 0;
+let pokemonNr = 1;
 let STATS_DATA = {};
 
-async function loadPokeApi(pokemonNr) {
+async function loadPokeApi() {
 
   let url20Buket = 'https://pokeapi.co/api/v2/pokemon/';
   let response20Buket = await fetch(url20Buket);
 
   responseJson20Buket = await response20Buket.json();
-  //console.log(responseJson20Buket);
-  url = responseJson20Buket.results[pokemonNr].url; /* 'https://pokeapi.co/api/v2/pokemon/' + */
-  let response = await fetch(url);
-  let responseJson = await response.json();
-
-  let urlStats = `https://pokeapi.co/api/v2/pokemon/${responseJson.name}`; //responseJson20Buket.results[pokemonNr].url?stats; // + '?language=de'
-  //console.log(urlDE);
+  console.log(responseJson20Buket);
+ 
+  loadDetailCard();
+  //Ich möchte den unteren Teil in einer eigenen Funktion haben
+  
+  /* let urlStats = `https://pokeapi.co/api/v2/pokemon/${pokemonNr}`; 
   let responseStats = await fetch(urlStats);
   STATS_DATA = await responseStats.json();
+  console.log(STATS_DATA);
+  cardHtml(); // das muss ich ändern. Ich will die Karte ansind in HTML schreiben und nur die Werte übergeben */
+}
 
+async function loadDetailCard() {
+  let urlStats = `https://pokeapi.co/api/v2/pokemon/${pokemonNr}`; 
+  let responseStats = await fetch(urlStats);
+  STATS_DATA = await responseStats.json();
+  console.log(STATS_DATA);
+  loadDetailTxt();
+  cardHtml(); // das muss ich ändern. Ich will die Karte ansind in HTML schreiben und nur die Werte übergeben
+}
 
-
-  //console.log(STATS_DATA.stats[1]); 
-
-  cardHtml(responseJson); // das muss ich ändern. Ich will die Karte ansind in HTML schreiben und nur die Werte übergeben
-
+async function loadDetailTxt(){
+  let urlDetailTxt = `https://pokeapi.co/api/v2/pokemon-species/${pokemonNr}`; 
+  let responsetxt = await fetch(urlDetailTxt);
+  let pokeSpecialtxt = await responsetxt.json();
+  console.log(pokeSpecialtxt);
 }
 
 
-function cardHtml(responseJson) {
-  document.getElementById('namePoke').innerText = responseJson.name;
-  typeBorders(responseJson);
-  PokeAbility(responseJson.abilities);
+function cardHtml() {
+  document.getElementById('namePoke').innerText = firstLetterBig(STATS_DATA.name);
+  typeBorders();
+  PokeAbility(STATS_DATA.abilities);
   //document.getElementById('ability1').innerText = responseJson.abilities[0].ability.name;
-  document.getElementById('pokeImg').src = responseJson.sprites.other['dream_world'].front_default;
-  // Call the createRadarChart function to generate the chart
-  createRadarChart();
+  
+  document.getElementById('pokeImg').src = getPicture(); //STATS_DATA.sprites.other['dream_world'].front_default;
+  // Call the createPolarAreaChart function to generate the chart
+  createPolarAreaChart();
 }
 
+function firstLetterBig(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
 
+function getPicture() {
+  if(STATS_DATA.sprites.other['dream_world'].front_default != null){
+    return STATS_DATA.sprites.other['dream_world'].front_default;
+  }else{
+    return STATS_DATA.sprites.other['official-artwork'].front_default;
+  }
+}
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// function block for left and right img border start
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function nextPokemon() {
   pokemonNr++;
-  loadPokeApi(pokemonNr);
+  if (pokemonNr > 1010) {pokemonNr = 1}
+  loadDetailCard(pokemonNr);
 }
 function prevPokemon() {
   pokemonNr--;
-  loadPokeApi(pokemonNr);
+  if (pokemonNr < 1) {pokemonNr = 1010}
+  loadDetailCard(pokemonNr);
 }
 
-function typeBorders(responseJson) {
-  leftBorder(responseJson.types[0].type.name);
-  rightBorder(responseJson.types, responseJson.types.length);
+function typeBorders() {
+  leftBorder(STATS_DATA.types[0].type.name);
+  rightBorder(STATS_DATA.types, STATS_DATA.types.length);
 }
 
 function leftBorder(pokeType1) {
   document.getElementById('cardImgLeft').className = '';
   document.getElementById('cardImgLeft').classList.add(pokeType1, 'typeContainer');
   document.getElementById('cardImgLeftText').innerText = pokeType1;
-  console.log(pokeType1);
+  //console.log(pokeType1);
 
 }
 function rightBorder(pokeType, length) {
@@ -72,6 +99,9 @@ function rightBorder(pokeType, length) {
     document.getElementById('cardImgRightText').innerText = pokeType[0].type.name;
   }
 }
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// function block for left and right img border end
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 function PokeAbility(key) { // checken ob der Code hier so passt, oder ob das nicht zu viel ist
   if (key[0]) {
@@ -84,84 +114,60 @@ function PokeAbility(key) { // checken ob der Code hier so passt, oder ob das ni
     return '';
   }
 }
-
-function getStats() {
-  let htmlStats = '';
-  for (let i = 0; i < STATS_DATA.stats.length; i++) {
-    let statName = STATS_DATA.stats[i].stat.name;
-    let statValue = STATS_DATA.stats[i].base_stat;
-    htmlStats += `<div>${statName}: ${statValue}</div>`;
-    console.log(statName + ': ' + statValue);
-  }
-  console.log(htmlStats);
-  return htmlStats;
-}
-
-// Function to create and render the radar chart
-function createRadarChart() {
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// function block for chart start
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+function createPolarAreaChart() {
   const STATS_ARRAY = STATS_DATA.stats;
-  //console.log(STATS_ARRAY);
-  const ctx = document.getElementById('radarChart').getContext('2d');
+  const ctx = document.getElementById('polarChart').getContext('2d');
   const chart = new Chart(ctx, {
-    type: 'radar',
+    type: 'polarArea',
     data: {
-      labels: STATS_ARRAY.map(statName => statName.stat.name),
-      datasets: radarChartDataSets(STATS_ARRAY)
+      //I've add here for lables a combination from stat.name and base_stat to get a beter legend
+      labels: STATS_ARRAY.map((statName, i) => statName.stat.name + ": " + STATS_ARRAY[i].base_stat),
+      datasets: polarChartDataSets(STATS_ARRAY)
     },
-    options: radarChartOptions()
+    options: polarChartOptions()
   });
 }
 
 
-
-function radarChartDataSets(STATS_ARRAY) {
+function polarChartDataSets(STATS_ARRAY) {
   return [{
-    display: 'false',
-    label: '',
     data: STATS_ARRAY.map(stat => stat.base_stat),
-     backgroundColor: 'rgba(54, 162, 235, 0.2)',
-    borderColor: 'rgba(54, 162, 235, 1)',
-    borderWidth: 1, 
-    pointBackgroundColor: "rgba(54, 162, 235, 1)",
-    pointBorderColor: "#fff",
-    pointHoverBackgroundColor: "#fff",
-    pointHoverBorderColor: "rgba(54, 162, 235, 1)",
-    pointRadius: 3, //[0, 5, 10, 15, 20, 25], // Hier legen Sie die Größe der Datenpunkte fest
-    pointStyle: "circle" // Hier können Sie das Symbol der Datenpunkte anpassen 
+    //each stat gets its own color
+    backgroundColor: [
+      '#FF00008a',
+      '#F080308a',
+      '#F8D0308a',
+      '#6890F08a',
+      '#78C8508a',
+      '#F858888a'
+    ],
+    borderWidth: 0,    
   }]
 }
 
-function radarChartOptions() {
+function polarChartOptions() {
   return {
+    responsive: true,
     animation: {
-      duration: 1000, // Dauer der Animation in Millisekunden
-      easing: "easeInOutBounce", // Easing-Funktion für das Bouncing (hier: Bounce-Effekt)
+      duration: 500, 
+      easing: "easeInOutBounce", 
     },
     scale: {
-      
       ticks: {
         beginAtZero: true,
-        max: 100,
+        max: 150,
         stepSize: 25,
         backdropColor: 'rgba(0, 0, 0, 0)',
-       
       },
-      angleLines: {
-        color: '#ee46788a'
-      },
-      pointLabels: {
-        fontColor: '#eec746f3', // Rote Label-Farbe
-      },
-      gridLines:{
+       gridLines:{
         color: '#ee46788a'
       }
-    },
-    tooltips: {
-      callbacks: {
-        label: function (tooltipItem) {
-          return tooltipItem.yLabel;
-        }
-      }
-    },
+    }
   }
 }
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// function block for chart end
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
