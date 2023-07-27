@@ -20,29 +20,24 @@ async function loadDetailCard() {
   let urlStats = `https://pokeapi.co/api/v2/pokemon/${pokemonNr}`;
   let responseStats = await fetch(urlStats);
   statsData = await responseStats.json();
-  console.log(statsData);
-  loadDetailTxt();
+  //console.log(statsData);
+  await loadDetailTxt();
+  console.log(await loadForTests());
   cardHtml(); // das muss ich ändern. Ich will die Karte ansind in HTML schreiben und nur die Werte übergeben
 }
 
 async function loadDetailTxt() {
   let urlDetailTxt = `https://pokeapi.co/api/v2/pokemon-species/${pokemonNr}`;
   let responsetxt = await fetch(urlDetailTxt);
-  const POKE_SPECIAL_TXT = await responsetxt.json();
-  console.log(POKE_SPECIAL_TXT);
-  console.log(POKE_SPECIAL_TXT['flavor_text_entries'][0]);
-
-  //Der folgende Code muss in eine eigene Funktion. Ich muss leider noch überprüfen ob der language code "en" ist
-  // ich bekomme sonst schon bei Raupi einen chinesischen text
-  if (POKE_SPECIAL_TXT['flavor_text_entries'][0] == null) {
-    document.getElementById('info1').innerHTML = 'We have not enough data about this pokemon!'
-  } else {
-    document.getElementById('info1').innerHTML = POKE_SPECIAL_TXT['flavor_text_entries'][0]['flavor_text'].replace(/[\r\f]+/g, " ");
-  }
-  if (POKE_SPECIAL_TXT['flavor_text_entries'][1] && POKE_SPECIAL_TXT['flavor_text_entries'][1]['flavor_text'] != POKE_SPECIAL_TXT['flavor_text_entries'][0]['flavor_text']) {
-    document.getElementById('info1').innerHTML += "<br>" + POKE_SPECIAL_TXT['flavor_text_entries'][1]['flavor_text'].replace(/[\r\f]+/g, " ");
-  }
+  pokeSpecialTxt = await responsetxt.json();
 }
+
+async function loadForTests() {
+  let urlDetailTxt = `https://pokeapi.co/api/v2/ability/65/`;
+  let responsetxt = await fetch(urlDetailTxt);
+  return await responsetxt.json();
+}
+
 
 //diese Funtion soll beim Start aufgerufen werden um die ersten 20 Pokemon zu rendern
 // Sie soll weiterhin eine Variable übergeben mit der nummer des zuletzt gerenderten Pokemon
@@ -54,7 +49,12 @@ function renderCardBucket() {
 function cardHtml() {
   document.getElementById('namePoke').innerText = firstLetterBig(statsData.name);
   typeBorders();
+  getFavorTxt();
+  console.log(statsData);
+  
   PokeAbility(statsData.abilities);
+  
+
   getHeightAndWeight();
   //document.getElementById('ability1').innerText = responseJson.abilities[0].ability.name;
 
@@ -123,14 +123,13 @@ function getHeightAndWeight() {
   document.getElementById('pokeWeight').innerText = (statsData.weight / 10) + 'kg';
 }
 
-
-
-
-
-function PokeAbility(key) { // checken ob der Code hier so passt, oder ob das nicht zu viel ist
+//////// ~~~~~~ hier weiter
+/// ich brauch hier noch einen Filter damit ich den englischen text bekomme
+async function PokeAbility(key) { // checken ob der Code hier so passt, oder ob das nicht zu viel ist
   if (key[0]) {
-    //console.log(key[0].ability.name);
     document.getElementById('ability1').innerText = key[0].ability.name;
+    let thererk = await getAbilityDescription(key[0]);
+    console.log(thererk);
   }
   if (key[1]) {
     document.getElementById('ability2').innerText = key[1].ability.name;
@@ -138,9 +137,52 @@ function PokeAbility(key) { // checken ob der Code hier so passt, oder ob das ni
     return '';
   }
 }
+
+
+async function getAbilityDescription(abilityNr) {
+  let urlAbilityDescr = abilityNr.ability.url;
+  let abilityDescr = await fetch(urlAbilityDescr);
+  let result = await abilityDescr.json()
+  console.log(result);
+  return result;
+  
+}
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // function block for side informations end
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// function block toe get the 1st unique flavorTexts start
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+function getFavorTxt() {
+  console.log(pokeSpecialTxt['flavor_text_entries'].length);
+  if (pokeSpecialTxt['flavor_text_entries'].length == 0) {
+    document.getElementById('info1').innerHTML = 'We have not enough data about this pokemon!'
+  } else {
+    let favor_txt_array = filterAndRemoveDuplicates(pokeSpecialTxt.flavor_text_entries);
+    document.getElementById('info1').innerHTML = favor_txt_array[0];
+    if (pokeSpecialTxt['flavor_text_entries'].length = 2) {
+      document.getElementById('info1').innerHTML += "<br>" + favor_txt_array[1];
+    }
+  }
+}
+
+// Funktion zum Filtern der Flavor-Texte nach Sprache "en" und Entfernen von Duplikaten
+function filterAndRemoveDuplicates(flavorTexts) {
+  const uniqueFlavorTexts = new Set();
+  flavorTexts.forEach(entry => {
+    if (entry.language.name === "en") {
+      uniqueFlavorTexts.add(entry.flavor_text);
+    }
+  });
+  let myArray1 = Array.from(uniqueFlavorTexts);
+  myArray1[0] = myArray1[0].replace(/[\r\f]+/g, " ");
+  myArray1[1] = myArray1[1].replace(/[\r\f]+/g, " ");
+  let myArray2 = [myArray1[0], myArray1[1]];
+  return myArray2;
+}
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// function block toe get the 1st unique flavorTexts end
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // function block for chart start
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
