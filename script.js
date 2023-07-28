@@ -6,14 +6,11 @@ let statsData = {};
 let pokeSpecialTxt = {};
 
 async function loadPokeApi() {
-
   let url20Buket = 'https://pokeapi.co/api/v2/pokemon/';
   let response20Buket = await fetch(url20Buket);
   responseJson20Buket = await response20Buket.json();
   //console.log(responseJson20Buket);
   renderCardBucket();
-
-
 }
 
 async function loadDetailCard() {
@@ -38,7 +35,6 @@ async function loadForTests() {
   return await responsetxt.json();
 }
 
-
 //diese Funtion soll beim Start aufgerufen werden um die ersten 20 Pokemon zu rendern
 // Sie soll weiterhin eine Variable übergeben mit der nummer des zuletzt gerenderten Pokemon
 // zweck: damit ich diese Variable nutzen kann um das nächste bucket zu laden.
@@ -50,15 +46,10 @@ function cardHtml() {
   document.getElementById('namePoke').innerText = firstLetterBig(statsData.name);
   typeBorders();
   getFavorTxt();
-  console.log(statsData);
-  
+  //console.log(statsData);
   PokeAbility(statsData.abilities);
-  
-
   getHeightAndWeight();
-  //document.getElementById('ability1').innerText = responseJson.abilities[0].ability.name;
-
-  document.getElementById('pokeImg').src = getPicture(); //STATS_DATA.sprites.other['dream_world'].front_default;
+  document.getElementById('pokeImg').src = getPicture(); 
   // Call the createPolarAreaChart function to generate the chart
   createPolarAreaChart();
 }
@@ -116,39 +107,49 @@ function rightBorder(pokeType, length) {
 // function block for left and right img border end
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// function block for side informations start
+// function block for pysical informations start
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function getHeightAndWeight() {
   document.getElementById('pokeHeight').innerText = (statsData.height * 10) + 'cm';
   document.getElementById('pokeWeight').innerText = (statsData.weight / 10) + 'kg';
 }
-
-//////// ~~~~~~ hier weiter
-/// ich brauch hier noch einen Filter damit ich den englischen text bekomme
-async function PokeAbility(key) { // checken ob der Code hier so passt, oder ob das nicht zu viel ist
-  if (key[0]) {
-    document.getElementById('ability1').innerText = key[0].ability.name;
-    let thererk = await getAbilityDescription(key[0]);
-    console.log(thererk);
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// function block for pysical informations end
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// function block for abilities start
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+async function PokeAbility(abilities) { 
+  if (abilities[0]) {
+    document.getElementById('ability1').innerText = abilities[0].ability.name;
+    let abilityDescription = await getAbilityDescription(abilities[0].ability.url);
+    document.getElementById('ability1').innerText += '\n' + abilityDescription;
   }
-  if (key[1]) {
-    document.getElementById('ability2').innerText = key[1].ability.name;
+  if (abilities[1]) {
+    document.getElementById('ability2').innerText = abilities[1].ability.name;
+    let abilityDescription = await getAbilityDescription(abilities[1].ability.url);
+    document.getElementById('ability2').innerText += '\n' + abilityDescription;
   } else {
     return '';
   }
 }
 
 
-async function getAbilityDescription(abilityNr) {
-  let urlAbilityDescr = abilityNr.ability.url;
-  let abilityDescr = await fetch(urlAbilityDescr);
-  let result = await abilityDescr.json()
-  console.log(result);
-  return result;
-  
+async function getAbilityDescription(abilityURL) {
+  const ABILITY_DESCR = await fetch(abilityURL);
+  const result = await ABILITY_DESCR.json();
+  let abilityDescriptionTxt = '';
+    for (let i = 0; i < result.effect_entries.length; i++) { // hier möchte ich eine besser schleife die do while oder while
+      if (result.effect_entries[i].language.name === "en") {
+        abilityDescriptionTxt = result.effect_entries[i].effect;
+        //console.log(abilityDescriptionTxt);
+        return abilityDescriptionTxt.replace(/[\r\f\n]+/g, " ");
+      }
+    }
+  return 'no text';
 }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// function block for side informations end
+// function block for abilities start
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // function block toe get the 1st unique flavorTexts start
@@ -216,6 +217,7 @@ function polarChartDataSets(STATS_ARRAY) {
     borderWidth: 0,
   }]
 }
+
 
 function polarChartOptions() {
   return {
