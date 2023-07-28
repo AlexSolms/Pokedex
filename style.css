@@ -4,16 +4,32 @@
 }
 
 .typeContainer{
-   /* width: 32px; */
    border-radius: 16px;
    writing-mode: vertical-rl;
 	text-orientation: upright;
    display: flex;
-   align-items: center;
    justify-content: space-around;
-   cursor: pointer;
+   align-items: center;
+   
    max-width: 32px;
    min-width: 32px;
+   flex: 1;
+   font-size: 1rem;
+  
+}
+.besideImg{
+   display: flex;
+   flex-direction: column;
+   justify-content: space-around;
+   align-items: center;
+   cursor: pointer;
+}
+
+@media (min-width:576px) {
+ .img{
+    min-height: 400px;
+    max-height: 400px;
+ }
 }
 
 
@@ -64,13 +80,4 @@
     left: 95%;
  } */
 
-  .img{
-    /* width: 250px; */
-    height: 400px;
- } 
- @media (min-width:576px) {
-   .img{
-      /* width: 250px; */
-      height: 400px;
-   }
- }
+ 

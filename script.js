@@ -86,20 +86,20 @@ function typeBorders() {
 }
 
 function leftBorder(pokeType1) {
-  document.getElementById('cardImgLeft').className = '';
-  document.getElementById('cardImgLeft').classList.add(pokeType1, 'typeContainer');
+  document.getElementById('cardImgLeftText').className = '';
+  document.getElementById('cardImgLeftText').classList.add(pokeType1, 'typeContainer');
   document.getElementById('cardImgLeftText').innerText = pokeType1;
   //console.log(pokeType1);
 
 }
 function rightBorder(pokeType, length) {
   if (length > 1) {
-    document.getElementById('cardImgRight').className = '';
-    document.getElementById('cardImgRight').classList.add(pokeType[1].type.name, 'typeContainer');
+    document.getElementById('cardImgRightText').className = '';
+    document.getElementById('cardImgRightText').classList.add(pokeType[1].type.name, 'typeContainer');
     document.getElementById('cardImgRightText').innerText = pokeType[1].type.name;
   } else {
-    document.getElementById('cardImgRight').className = '';
-    document.getElementById('cardImgRight').classList.add(pokeType[0].type.name, 'typeContainer');
+    document.getElementById('cardImgRightText').className = '';
+    document.getElementById('cardImgRightText').classList.add(pokeType[0].type.name, 'typeContainer');
     document.getElementById('cardImgRightText').innerText = pokeType[0].type.name;
   }
 }
