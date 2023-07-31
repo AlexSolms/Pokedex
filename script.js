@@ -45,6 +45,7 @@ function renderCardBucket() {
 function cardHtml() {
   document.getElementById('namePoke').innerText = firstLetterBig(statsData.name);
   typeBorders();
+  openSelectedInfo(1);
   getFavorTxt();
   //console.log(statsData);
   PokeAbility(statsData.abilities);
@@ -65,6 +66,21 @@ function getPicture() {
     return statsData.sprites.other['official-artwork'].front_default;
   }
 }
+
+//render menu -- info the user want to see
+function openSelectedInfo(number){
+  for (let i = 1; i < 5; i++) {
+    if (document.getElementById('menu' + i).classList.contains('d-none') && i === number) {
+      document.getElementById('menu' + i).classList.remove('d-none');
+    } else if(!document.getElementById('menu' + i).classList.contains('d-none') && i !== number)
+    document.getElementById('menu' + i).classList.add('d-none');
+    }
+    
+  }
+
+
+
+
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // function block for left and right img border start
@@ -157,12 +173,12 @@ async function getAbilityDescription(abilityURL) {
 function getFavorTxt() {
   console.log(pokeSpecialTxt['flavor_text_entries'].length);
   if (pokeSpecialTxt['flavor_text_entries'].length == 0) {
-    document.getElementById('info1').innerHTML = 'We have not enough data about this pokemon!'
+    document.getElementById('info2').innerHTML = 'We have not enough data about this pokemon!'
   } else {
     let favor_txt_array = filterAndRemoveDuplicates(pokeSpecialTxt.flavor_text_entries);
-    document.getElementById('info1').innerHTML = favor_txt_array[0];
+    document.getElementById('info2').innerHTML = favor_txt_array[0];
     if (pokeSpecialTxt['flavor_text_entries'].length = 2) {
-      document.getElementById('info1').innerHTML += "<br>" + favor_txt_array[1];
+      document.getElementById('info2').innerHTML += "<br>" + favor_txt_array[1];
     }
   }
 }
@@ -215,6 +231,7 @@ function polarChartDataSets(STATS_ARRAY) {
       '#F858888a'
     ],
     borderWidth: 0,
+    
   }]
 }
 

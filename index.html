@@ -21,9 +21,9 @@
     </div>
     <!-- <button onclick="getStats()">klick</button> -->
 
-    
+
     <div id="start" class="myStartClass">
-        <section class="container p-0 cardMaxWidth"> 
+        <section class="container p-0 cardMaxWidth">
             <div id="idCardContent" class=" cardContent card pt-2 bg-dark bg-gradient text-white">
                 <div class="">
                     <div id="idCardhead" class="card-head text-center">
@@ -49,16 +49,32 @@
 
                     </div>
                     <div class="cardStats card-text">
-                        <div class="thirdInfo" id="info1"></div>
-                        <div class="firstInfo" id="info2">Abilities: <br>
-                            <span>ability 1: </span><span id="ability1"></span><br>
-                            <span>ability 2: </span><span id="ability2"></span><br>
-                            <span>heigt: </span><span id="pokeHeight"></span><br>
-                            <span>weight: </span><span id="pokeWeight"></span><br>
+                        <div id="infoMenu" class="d-flex justify-content-between">
+                            <h6 onclick="openSelectedInfo(1)">dimensons:</h6>
+                            <h6 onclick="openSelectedInfo(2)">text</h6>
+                            <h6 onclick="openSelectedInfo(3)">Abilities:</h6>
+                            <h6 onclick="openSelectedInfo(4)">Stats:</h6>
                         </div>
-                        <div class="secondInfo" id="info3">Stats: <canvas id="polarChart"></canvas></div>
-                        
-                        <div class="fourthInfo" id="info4"></div>
+                        <div class="infoContentContainer">
+                            <div class="firstInfo" id="menu1">
+                                <span>heigt: </span><span id="pokeHeight"></span><br>
+                                <span>weight: </span><span id="pokeWeight"></span><br>
+                            </div>
+                            <div class="secondInfo d-none" id="menu2">
+                                <div id="info2">
+                                </div>
+                            </div>
+                            <div class="thirdInfo d-none" id="menu3">
+                                <span>ability 1: </span><br>
+                                <span id="ability1"></span><br>
+                                <span>ability 2: </span><br>
+                                <span id="ability2"></span><br>
+                            </div>
+
+                            <div class="fourthInfo d-none" id="menu4">
+                                <canvas id="polarChart"></canvas>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
