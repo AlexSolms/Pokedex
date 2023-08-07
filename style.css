@@ -1,6 +1,39 @@
 .cardContent{
     --bs-gradient: linear-gradient(75deg, rgba(212, 11, 11, 0.15), rgba(165, 33, 33, 0), rgba(212, 11, 11, 0.15)); 
+}
 
+.cardBorderRadius{
+   --bs-card-border-radius: 16px;
+   --bs-border-width: none;
+}
+.cardLeftTypeContainer{
+   border-bottom-left-radius: 16px;
+   border-top-left-radius: 16px;
+   writing-mode: vertical-rl;
+	text-orientation: upright;
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+   max-width: 32px;
+   min-width: 32px;
+   flex: 1;
+   font-size: 1rem;
+  
+}
+
+.cardRightTypeContainer{
+   border-bottom-right-radius: 16px;
+   border-top-right-radius: 16px;
+   writing-mode: vertical-rl;
+	text-orientation: upright;
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+   max-width: 32px;
+   min-width: 32px;
+   flex: 1;
+   font-size: 1rem;
+  
 }
 
 .typeContainer{
@@ -10,7 +43,6 @@
    display: flex;
    justify-content: space-around;
    align-items: center;
-   
    max-width: 32px;
    min-width: 32px;
    flex: 1;
@@ -25,12 +57,47 @@
    cursor: pointer;
 }
 
-@media (min-width:576px) {
- .img{
-    min-height: 400px;
-    max-height: 400px;
+
+ .Cardimg{
+    height: 200px;
+    width: 200px;
  }
-}
+
+
+@media (min-width:576px) {
+   .img{
+      min-height: 400px;
+      max-height: 400px;
+      
+   }
+  }
+  @media (max-width:698px) {
+   .Cardimg{
+      height: 150px;
+    width: 150px;
+      
+   }
+  }
+  @media (max-width:598px) {
+   .Cardimg{
+      height: 200px;
+    width: 200px;
+      
+   }
+  }
+  @media (max-width:340px) {
+   .Cardimg{
+      
+      height: 150px;
+      width: 80%;
+      
+   }
+   .w100{
+      width: 100%;
+      height: auto;
+   }
+  }
+
 
 
 
@@ -63,6 +130,11 @@
 
  .cardMaxWidth{
    max-width: 540px !important;
+ }
+ 
+ .maxCardSize{
+   max-width: 400px !important;
+   max-height: 400px !important;
  }
 
  .infoContentContainer{

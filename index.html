@@ -10,14 +10,18 @@
     <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
 
-    <script src="script.js" defer></script>
+    <script src="scriptCard.js" defer></script>
+    <script src="scriptTwentyCards.js" defer></script>
+    <script src="templatePpokeCard.js" defer></script>
     <script src="./Chart.js_2.8.0_Chart.min.js"></script>
+    
+    <!-- <script src="../../node_modules/chart.js/dist/chart.umd.js"></script> -->
 
+<body onload="render40Cards()">
 
-<body onload="loadPokeApi(0)">
-
-    <div id="tewntyBucket"> <!-- hier kommen die 20 Farten rein -->
-
+    <div class=""> <!-- hier kommen die 20 Karten rein -->
+        <div id="twentyBucket" class="d-flex justify-content-center flex-wrap gap-3">
+        </div>
     </div>
     <!-- <button onclick="getStats()">klick</button> -->
 

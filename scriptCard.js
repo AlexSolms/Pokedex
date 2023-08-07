@@ -5,25 +5,30 @@ let pokemonNr = 1;
 let statsData = {};
 let pokeSpecialTxt = {};
 
-async function loadPokeApi() {
+/* async function loadPokeApi() {
   let url20Buket = 'https://pokeapi.co/api/v2/pokemon/';
   let response20Buket = await fetch(url20Buket);
   responseJson20Buket = await response20Buket.json();
   //console.log(responseJson20Buket);
   renderCardBucket();
-}
+} */
 
-async function loadDetailCard() {
-  let urlStats = `https://pokeapi.co/api/v2/pokemon/${pokemonNr}`;
-  let responseStats = await fetch(urlStats);
-  statsData = await responseStats.json();
+async function loadDetailCard(pokemonNr) {
+  await fetchDetailData(pokemonNr);
   //console.log(statsData);
-  await loadDetailTxt();
+  await fetchDetailTxt(pokemonNr);
   console.log(await loadForTests());
   cardHtml(); // das muss ich ändern. Ich will die Karte ansind in HTML schreiben und nur die Werte übergeben
 }
 
-async function loadDetailTxt() {
+async function fetchDetailData(pokemonNr) {
+  let urlStats = `https://pokeapi.co/api/v2/pokemon/${pokemonNr}`;
+  let responseStats = await fetch(urlStats);
+  statsData = await responseStats.json();
+}
+
+
+async function fetchDetailTxt(pokemonNr) {
   let urlDetailTxt = `https://pokeapi.co/api/v2/pokemon-species/${pokemonNr}`;
   let responsetxt = await fetch(urlDetailTxt);
   pokeSpecialTxt = await responsetxt.json();
@@ -39,18 +44,18 @@ async function loadForTests() {
 // Sie soll weiterhin eine Variable übergeben mit der nummer des zuletzt gerenderten Pokemon
 // zweck: damit ich diese Variable nutzen kann um das nächste bucket zu laden.
 function renderCardBucket() {
-  loadDetailCard(); //diese Funktion soll aufgerufen werden, wenn eine der Karten angeklickt wird.
+  loadDetailCard(pokemonNr); //diese Funktion soll aufgerufen werden, wenn eine der Karten angeklickt wird.
 }
 
 function cardHtml() {
   document.getElementById('namePoke').innerText = firstLetterBig(statsData.name);
-  typeBorders();
+  typeBorders('cardImgLeftText', 'cardImgRightText');
   openSelectedInfo(1);
   getFavorTxt();
   //console.log(statsData);
   PokeAbility(statsData.abilities);
   getHeightAndWeight();
-  document.getElementById('pokeImg').src = getPicture(); 
+  document.getElementById('pokeImg').src = getPicture();
   // Call the createPolarAreaChart function to generate the chart
   createPolarAreaChart();
 }
@@ -68,15 +73,15 @@ function getPicture() {
 }
 
 //render menu -- info the user want to see
-function openSelectedInfo(number){
+function openSelectedInfo(number) {
   for (let i = 1; i < 5; i++) {
     if (document.getElementById('menu' + i).classList.contains('d-none') && i === number) {
       document.getElementById('menu' + i).classList.remove('d-none');
-    } else if(!document.getElementById('menu' + i).classList.contains('d-none') && i !== number)
-    document.getElementById('menu' + i).classList.add('d-none');
-    }
-    
+    } else if (!document.getElementById('menu' + i).classList.contains('d-none') && i !== number)
+      document.getElementById('menu' + i).classList.add('d-none');
   }
+
+}
 
 
 
@@ -96,27 +101,27 @@ function prevPokemon() {
   loadDetailCard(pokemonNr);
 }
 
-function typeBorders() {
-  leftBorder(statsData.types[0].type.name);
-  rightBorder(statsData.types, statsData.types.length);
+function typeBorders(leftID, rightID) {
+  leftBorder(statsData.types[0].type.name, leftID);
+  rightBorder(statsData.types, statsData.types.length, rightID);
 }
 
-function leftBorder(pokeType1) {
-  document.getElementById('cardImgLeftText').className = '';
-  document.getElementById('cardImgLeftText').classList.add(pokeType1, 'typeContainer');
-  document.getElementById('cardImgLeftText').innerText = pokeType1;
+function leftBorder(pokeType1, leftID) {
+  document.getElementById(leftID).className = '';
+  document.getElementById(leftID).classList.add(pokeType1, 'typeContainer');
+  document.getElementById(leftID).innerText = pokeType1;
   //console.log(pokeType1);
 
 }
-function rightBorder(pokeType, length) {
+function rightBorder(pokeType, length, rightID) {
   if (length > 1) {
-    document.getElementById('cardImgRightText').className = '';
-    document.getElementById('cardImgRightText').classList.add(pokeType[1].type.name, 'typeContainer');
-    document.getElementById('cardImgRightText').innerText = pokeType[1].type.name;
+    document.getElementById(rightID).className = '';
+    document.getElementById(rightID).classList.add(pokeType[1].type.name, 'typeContainer');
+    document.getElementById(rightID).innerText = pokeType[1].type.name;
   } else {
-    document.getElementById('cardImgRightText').className = '';
-    document.getElementById('cardImgRightText').classList.add(pokeType[0].type.name, 'typeContainer');
-    document.getElementById('cardImgRightText').innerText = pokeType[0].type.name;
+    document.getElementById(rightID).className = '';
+    document.getElementById(rightID).classList.add(pokeType[0].type.name, 'typeContainer');
+    document.getElementById(rightID).innerText = pokeType[0].type.name;
   }
 }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -135,7 +140,7 @@ function getHeightAndWeight() {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // function block for abilities start
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-async function PokeAbility(abilities) { 
+async function PokeAbility(abilities) {
   if (abilities[0]) {
     document.getElementById('ability1').innerText = abilities[0].ability.name;
     let abilityDescription = await getAbilityDescription(abilities[0].ability.url);
@@ -155,13 +160,13 @@ async function getAbilityDescription(abilityURL) {
   const ABILITY_DESCR = await fetch(abilityURL);
   const result = await ABILITY_DESCR.json();
   let abilityDescriptionTxt = '';
-    for (let i = 0; i < result.effect_entries.length; i++) { // hier möchte ich eine besser schleife die do while oder while
-      if (result.effect_entries[i].language.name === "en") {
-        abilityDescriptionTxt = result.effect_entries[i].effect;
-        //console.log(abilityDescriptionTxt);
-        return abilityDescriptionTxt.replace(/[\r\f\n]+/g, " ");
-      }
+  for (let i = 0; i < result.effect_entries.length; i++) { // hier möchte ich eine besser schleife die do while oder while
+    if (result.effect_entries[i].language.name === "en") {
+      abilityDescriptionTxt = result.effect_entries[i].effect;
+      //console.log(abilityDescriptionTxt);
+      return abilityDescriptionTxt.replace(/[\r\f\n]+/g, " ");
     }
+  }
   return 'no text';
 }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -231,7 +236,7 @@ function polarChartDataSets(STATS_ARRAY) {
       '#F858888a'
     ],
     borderWidth: 0,
-    
+
   }]
 }
 
