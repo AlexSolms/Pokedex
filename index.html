@@ -12,12 +12,17 @@
 
     <script src="scriptCard.js" defer></script>
     <script src="scriptTwentyCards.js" defer></script>
-    <script src="templatePpokeCard.js" defer></script>
+    <script src="templatePokeCard.js" defer></script>
+    <script src="fetchData.js" defer></script>
     <script src="./Chart.js_2.8.0_Chart.min.js"></script>
     
     <!-- <script src="../../node_modules/chart.js/dist/chart.umd.js"></script> -->
 
 <body onload="render40Cards()">
+
+    <div id="loader">
+        Bitte warten, die Seite lädt...
+      </div>
 
     <div class=""> <!-- hier kommen die 20 Karten rein -->
         <div id="twentyBucket" class="d-flex justify-content-center flex-wrap gap-3">

@@ -5,13 +5,6 @@ let pokemonNr = 1;
 let statsData = {};
 let pokeSpecialTxt = {};
 
-/* async function loadPokeApi() {
-  let url20Buket = 'https://pokeapi.co/api/v2/pokemon/';
-  let response20Buket = await fetch(url20Buket);
-  responseJson20Buket = await response20Buket.json();
-  //console.log(responseJson20Buket);
-  renderCardBucket();
-} */
 
 async function loadDetailCard(pokemonNr) {
   await fetchDetailData(pokemonNr);
@@ -20,7 +13,7 @@ async function loadDetailCard(pokemonNr) {
   console.log(await loadForTests());
   cardHtml(); // das muss ich ändern. Ich will die Karte ansind in HTML schreiben und nur die Werte übergeben
 }
-
+/* //hier sind meine fetchdateien!!!!!!
 async function fetchDetailData(pokemonNr) {
   let urlStats = `https://pokeapi.co/api/v2/pokemon/${pokemonNr}`;
   let responseStats = await fetch(urlStats);
@@ -39,7 +32,7 @@ async function loadForTests() {
   let responsetxt = await fetch(urlDetailTxt);
   return await responsetxt.json();
 }
-
+ */
 //diese Funtion soll beim Start aufgerufen werden um die ersten 20 Pokemon zu rendern
 // Sie soll weiterhin eine Variable übergeben mit der nummer des zuletzt gerenderten Pokemon
 // zweck: damit ich diese Variable nutzen kann um das nächste bucket zu laden.
@@ -52,8 +45,9 @@ function cardHtml() {
   typeBorders('cardImgLeftText', 'cardImgRightText');
   openSelectedInfo(1);
   getFavorTxt();
-  //console.log(statsData);
+  //console.log(statsData.abilities);
   PokeAbility(statsData.abilities);
+  
   getHeightAndWeight();
   document.getElementById('pokeImg').src = getPicture();
   // Call the createPolarAreaChart function to generate the chart
@@ -176,7 +170,7 @@ async function getAbilityDescription(abilityURL) {
 // function block toe get the 1st unique flavorTexts start
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function getFavorTxt() {
-  console.log(pokeSpecialTxt['flavor_text_entries'].length);
+  //console.log(pokeSpecialTxt['flavor_text_entries'].length);
   if (pokeSpecialTxt['flavor_text_entries'].length == 0) {
     document.getElementById('info2').innerHTML = 'We have not enough data about this pokemon!'
   } else {

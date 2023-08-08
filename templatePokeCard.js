@@ -1,4 +1,4 @@
-async function pokemonCard(pokemonID) {
+function pokemonCard(pokemonID) {
     return document.getElementById('twentyBucket').innerHTML += /*html*/ `
         <div id="${pokemonID}" class="card cardBorderRadius cardContent bg-dark bg-gradient text-white w100" onclick="loadDetailCard(${pokemonID})">
             <div id="idCardImgContainer" class="cardImgContainer">
