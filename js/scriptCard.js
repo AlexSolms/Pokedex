@@ -12,6 +12,7 @@ async function loadDetailCard(pokemonNr) {
   await fetchDetailTxt(pokemonNr);
   console.log(await loadForTests());
   cardHtml(); // das muss ich ändern. Ich will die Karte ansind in HTML schreiben und nur die Werte übergeben
+document.getElementById('detailCard').classList.remove('d-none');
 }
 
 //diese Funtion soll beim Start aufgerufen werden um die ersten 40 Pokemon zu rendern
@@ -239,3 +240,13 @@ function polarChartOptions() {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // function block for chart end
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+/* function hideDetailCard() {
+  document.getElementById('detailCard').classList.add('d-none'); 
+}
+ */
+window.onclick = function(event) {
+  if (event.target == document.getElementById('detailCard')) {
+    document.getElementById('detailCard').classList.add('d-none'); 
+  }
+}
