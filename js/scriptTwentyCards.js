@@ -39,12 +39,12 @@ function addDataToElementID() {
 }
 // Funktion, um den Ladebildschirm einzublenden
 function showLoader() {
-  document.getElementById('preLoader').style.display = 'block';
+  document.getElementById('preLoader').classList.remove('d-none');
 }
 
 // Funktion, um den Ladebildschirm auszublenden
 function hideLoader() {
-  document.getElementById('preLoader').style.display = 'none';
+  document.getElementById('preLoader').classList.add('d-none');
 }
 
 function showNext40Poke() {

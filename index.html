@@ -20,8 +20,9 @@
 
 <body onload="render40Cards()">
 
-    <div id="preLoader">
-        Bitte warten, die Seite lädt...
+    <div id="preLoader" class="preloading">
+        <div>Bitte warten, die Seite lädt...</div>
+        <img src="./pic/pokemon_ball.svg" alt="pokeBall">
       </div>
 
     <div class=""> <!-- hier kommen die 20 Karten rein -->
@@ -31,7 +32,7 @@
     <!-- <button onclick="getStats()">klick</button> -->
 
 
-    <div id="start" class="myStartClass">
+    <div id="detailCard" class="myStartClass d-none" >
         <section class="container p-0 cardMaxWidth">
             <div id="idCardContent" class=" cardContent card pt-2 bg-dark bg-gradient text-white">
                 <div class="">
