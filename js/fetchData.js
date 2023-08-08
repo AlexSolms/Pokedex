@@ -16,3 +16,8 @@ async function fetchDetailData(pokemonNr) {
     let responsetxt = await fetch(urlDetailTxt);
     return await responsetxt.json();
   }
+
+  async function fetchAbilityDescription(abilityURL){
+    const ABILITY_DESCR = await fetch(abilityURL);
+    return await ABILITY_DESCR.json();
+  } 

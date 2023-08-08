@@ -1,4 +1,4 @@
-#loader {
+#preLoader {
    position: fixed;
    top: 0;
    left: 0;
@@ -156,6 +156,25 @@
  .infoContentContainer{
 
    height: 300px;
+ }
+
+ /* only works with WebKit-based browsers also nicht im*/
+ 
+
+ .infoContentContainer::-webkit-scrollbar {
+   width: 6px;
+ }
+
+  
+ /* Handle */
+ .infoContentContainer::-webkit-scrollbar-thumb {
+   background: rgba(114, 2, 2, 0.959); 
+   border-radius: 8px;
+ }
+ 
+ /* Handle on hover */
+ .infoContentContainer::-webkit-scrollbar-thumb:hover {
+   background: #b101019f; 
  }
 
  

@@ -13,27 +13,8 @@ async function loadDetailCard(pokemonNr) {
   console.log(await loadForTests());
   cardHtml(); // das muss ich ändern. Ich will die Karte ansind in HTML schreiben und nur die Werte übergeben
 }
-/* //hier sind meine fetchdateien!!!!!!
-async function fetchDetailData(pokemonNr) {
-  let urlStats = `https://pokeapi.co/api/v2/pokemon/${pokemonNr}`;
-  let responseStats = await fetch(urlStats);
-  statsData = await responseStats.json();
-}
 
-
-async function fetchDetailTxt(pokemonNr) {
-  let urlDetailTxt = `https://pokeapi.co/api/v2/pokemon-species/${pokemonNr}`;
-  let responsetxt = await fetch(urlDetailTxt);
-  pokeSpecialTxt = await responsetxt.json();
-}
-
-async function loadForTests() {
-  let urlDetailTxt = `https://pokeapi.co/api/v2/ability/65/`;
-  let responsetxt = await fetch(urlDetailTxt);
-  return await responsetxt.json();
-}
- */
-//diese Funtion soll beim Start aufgerufen werden um die ersten 20 Pokemon zu rendern
+//diese Funtion soll beim Start aufgerufen werden um die ersten 40 Pokemon zu rendern
 // Sie soll weiterhin eine Variable übergeben mit der nummer des zuletzt gerenderten Pokemon
 // zweck: damit ich diese Variable nutzen kann um das nächste bucket zu laden.
 function renderCardBucket() {
@@ -46,7 +27,7 @@ function cardHtml() {
   openSelectedInfo(1);
   getFavorTxt();
   //console.log(statsData.abilities);
-  PokeAbility(statsData.abilities);
+  getPokeAbility(statsData.abilities);
   
   getHeightAndWeight();
   document.getElementById('pokeImg').src = getPicture();
@@ -134,7 +115,7 @@ function getHeightAndWeight() {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // function block for abilities start
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-async function PokeAbility(abilities) {
+async function getPokeAbility(abilities) {
   if (abilities[0]) {
     document.getElementById('ability1').innerText = abilities[0].ability.name;
     let abilityDescription = await getAbilityDescription(abilities[0].ability.url);
@@ -151,17 +132,17 @@ async function PokeAbility(abilities) {
 
 
 async function getAbilityDescription(abilityURL) {
-  const ABILITY_DESCR = await fetch(abilityURL);
-  const result = await ABILITY_DESCR.json();
+  const result = await fetchAbilityDescription(abilityURL); //await ABILITY_DESCR.json();
   let abilityDescriptionTxt = '';
+  //das Problem hier: Wenn es mehr text gibt als in das div passt dann kann man den kompletten Text nicht mehr lesen
   for (let i = 0; i < result.effect_entries.length; i++) { // hier möchte ich eine besser schleife die do while oder while
     if (result.effect_entries[i].language.name === "en") {
       abilityDescriptionTxt = result.effect_entries[i].effect;
-      //console.log(abilityDescriptionTxt);
+      console.log(abilityDescriptionTxt);
       return abilityDescriptionTxt.replace(/[\r\f\n]+/g, " ");
     }
   }
-  return 'no text';
+  return 'We do not know anything about this ability.\nPlease help us to collect data!\n As soon you meet this Pokemon your Pokedex will record.';
 }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // function block for abilities start
