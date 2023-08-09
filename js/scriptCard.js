@@ -6,13 +6,15 @@ let statsData = {};
 let pokeSpecialTxt = {};
 
 
-async function loadDetailCard(pokemonNr) {
-  await fetchDetailData(pokemonNr);
+async function loadDetailCard(numberPoke) {
+  await fetchDetailData(numberPoke);
   //console.log(statsData);
-  await fetchDetailTxt(pokemonNr);
-  console.log(await loadForTests());
+  await fetchDetailTxt(numberPoke);
+  pokemonNr = numberPoke;
+  //console.log(await loadForTests());
   cardHtml(); // das muss ich ändern. Ich will die Karte ansind in HTML schreiben und nur die Werte übergeben
-document.getElementById('detailCard').classList.remove('d-none');
+  document.getElementById('detailCard').classList.remove('d-none');
+  document.getElementById('myBody').classList.add('overflow-hidden');
 }
 
 //diese Funtion soll beim Start aufgerufen werden um die ersten 40 Pokemon zu rendern
@@ -29,7 +31,7 @@ function cardHtml() {
   getFavorTxt();
   //console.log(statsData.abilities);
   getPokeAbility(statsData.abilities);
-  
+
   getHeightAndWeight();
   document.getElementById('pokeImg').src = getPicture();
   // Call the createPolarAreaChart function to generate the chart
@@ -139,7 +141,7 @@ async function getAbilityDescription(abilityURL) {
   for (let i = 0; i < result.effect_entries.length; i++) { // hier möchte ich eine besser schleife die do while oder while
     if (result.effect_entries[i].language.name === "en") {
       abilityDescriptionTxt = result.effect_entries[i].effect;
-      console.log(abilityDescriptionTxt);
+      //console.log(abilityDescriptionTxt);
       return abilityDescriptionTxt.replace(/[\r\f\n]+/g, " ");
     }
   }
@@ -241,12 +243,24 @@ function polarChartOptions() {
 // function block for chart end
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-/* function hideDetailCard() {
-  document.getElementById('detailCard').classList.add('d-none'); 
-}
- */
-window.onclick = function(event) {
-  if (event.target == document.getElementById('detailCard')) {
-    document.getElementById('detailCard').classList.add('d-none'); 
+
+window.onclick = function (event) {
+  const POPUP = document.getElementById('detailCard');
+  if (event.target == POPUP) {
+    console.log('in idCardContent geklicket');
+    document.getElementById('detailCard').classList.add('d-none');
+    document.getElementById('myBody').classList.remove('overflow-hidden');
   }
 }
+
+function hideDetailCard() {
+  document.getElementById('detailCard').classList.add('d-none');
+  document.getElementById('myBody').classList.remove('overflow-hidden');
+}
+
+
+
+
+
+
+

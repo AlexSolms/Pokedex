@@ -15,15 +15,15 @@
     <script src="./js/templatePokeCard.js" defer></script>
     <script src="./js/fetchData.js" defer></script>
     <script src="./js/Chart.js_2.8.0_Chart.min.js"></script>
-    
+
     <!-- <script src="../../node_modules/chart.js/dist/chart.umd.js"></script> -->
 
-<body onload="render40Cards()">
+<body id="myBody" onload="render40Cards()">
 
     <div id="preLoader" class="preloading">
         <div>Bitte warten, die Seite lädt...</div>
         <img src="./pic/pokemon_ball.svg" alt="pokeBall">
-      </div>
+    </div>
 
     <div class=""> <!-- hier kommen die 20 Karten rein -->
         <div id="twentyBucket" class="d-flex justify-content-center flex-wrap gap-3">
@@ -32,11 +32,14 @@
     <!-- <button onclick="getStats()">klick</button> -->
 
 
-    <div id="detailCard" class="myStartClass d-none" >
-        <section class="container p-0 cardMaxWidth">
-            <div id="idCardContent" class=" cardContent card pt-2 bg-dark bg-gradient text-white">
+    <div id="detailCard" class="myStartClass d-none">
+        <section id="test2" class="container p-0 cardMaxWidth">
+            <div id="idCardContent" class=" cardContent card bg-dark bg-gradient text-white">
                 <div class="">
                     <div id="idCardhead" class="card-head text-center">
+                        <div class="d-flex justify-content-center">
+                            <img src="./pic/x.svg" alt="close" class="closeBtn" onclick="hideDetailCard()">
+                        </div>
                         <h3 class="pokeName card-title" id="namePoke"></h3>
                     </div>
                     <div id="idCardImgContainer" class="cardImgContainer">
