@@ -11,9 +11,10 @@
     <link rel="stylesheet" href="style.css">
 
     <script src="./js/scriptCard.js" defer></script>
-    <script src="./js/scriptTwentyCards.js" defer></script>
+    <script src="./js/scriptBucketOfCards.js" defer></script>
     <script src="./js/templatePokeCard.js" defer></script>
     <script src="./js/fetchData.js" defer></script>
+    <script src="./js/loadNewCards.js" defer></script>
     <script src="./js/Chart.js_2.8.0_Chart.min.js"></script>
 
     <!-- <script src="../../node_modules/chart.js/dist/chart.umd.js"></script> -->
@@ -26,7 +27,7 @@
     </div>
 
     <div class=""> <!-- hier kommen die 20 Karten rein -->
-        <div id="twentyBucket" class="d-flex justify-content-center flex-wrap gap-3">
+        <div id="fourtyBucket" class="d-flex justify-content-center flex-wrap gap-3">
         </div>
     </div>
     <!-- <button onclick="getStats()">klick</button> -->
@@ -93,7 +94,9 @@
             </div>
         </section>
     </div>
-
+    <div id="end-of-page">
+        <p>Ende der Seite</p>
+    </div>
 </body>
 
 </html>
