@@ -1,6 +1,6 @@
 function pokemonCard(pokemonID) {
     return document.getElementById('fourtyBucket').innerHTML += /*html*/ `
-        <div id="${pokemonID}" class="card cardBorderRadius cardContent bg-dark bg-gradient text-white w100" onclick="loadDetailCard(${pokemonID})">
+        <div id="${pokemonID}" class="pokemon-card card cardBorderRadius cardContent bg-dark bg-gradient text-white w100" onclick="loadDetailCard(${pokemonID})">
             <div id="idCardImgContainer" class="cardImgContainer">
                 <div id="idCardImgContainerInner" class="gap-4 d-flex justify-content-between">
                     <div id="" class="besideImg">

@@ -15,16 +15,46 @@
     <script src="./js/templatePokeCard.js" defer></script>
     <script src="./js/fetchData.js" defer></script>
     <script src="./js/loadNewCards.js" defer></script>
+    <script src="./js/globalStuff.js" defer></script>
     <script src="./js/Chart.js_2.8.0_Chart.min.js"></script>
 
     <!-- <script src="../../node_modules/chart.js/dist/chart.umd.js"></script> -->
 
 <body id="myBody" onload="render40Cards()">
 
+    <!-- Preloader start -->
     <div id="preLoader" class="preloading">
         <div>Bitte warten, die Seite lädt...</div>
         <img src="./pic/pokemon_ball.svg" alt="pokeBall">
     </div>
+    <!-- Preloader end -->
+
+    
+    <nav id="navBar" class="sticky-top navbar navbar-expand-md navbar-dark bg-dark p-3">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
+            aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="navbar-brand" href="#">Pokedex</a>
+
+        <div class="collapse navbar-collapse justify-content-end ml" id="navbarTogglerDemo01">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+            </ul>
+
+            <input class="form-control w-auto mr-sm-2" id="searchInput" type="search" placeholder="Search Pokémon" aria-label="Search" onsearch="searchPokemon()" onkeyup="searchPokemon()">
+
+        </div>
+    </nav>
 
     <div class=""> <!-- hier kommen die 20 Karten rein -->
         <div id="fourtyBucket" class="d-flex justify-content-center flex-wrap gap-3">
@@ -94,9 +124,9 @@
             </div>
         </section>
     </div>
-    <div id="end-of-page">
+    <footer id="end-of-page">
         <p>Ende der Seite</p>
-    </div>
+    </footer>
 </body>
 
 </html>

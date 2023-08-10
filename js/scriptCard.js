@@ -1,9 +1,10 @@
-//const POKE_API = [];
+/* //const POKE_API = [];
 let responseJson20Buket = '';
 let url = '';
 let pokemonNr = 1;
 let statsData = {};
 let pokeSpecialTxt = {};
+let blockForSearch = false; */
 
 
 async function loadDetailCard(numberPoke) {
@@ -29,13 +30,10 @@ function cardHtml() {
   typeBorders('cardImgLeftText', 'cardImgRightText');
   openSelectedInfo(1);
   getFavorTxt();
-  //console.log(statsData.abilities);
   getPokeAbility(statsData.abilities);
-
   getHeightAndWeight();
   document.getElementById('pokeImg').src = getPicture();
-  // Call the createPolarAreaChart function to generate the chart
-  createPolarAreaChart();
+  createPolarAreaChart();// Calles the createPolarAreaChart function to generate the chart
 }
 
 function firstLetterBig(str) {
@@ -61,18 +59,16 @@ function openSelectedInfo(number) {
 
 }
 
-
-
-
-
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // function block for left and right img border start
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function nextPokemon() {
   pokemonNr++;
-  if (pokemonNr > 1010) { pokemonNr = 1 }
+  if (pokemonNr > 1010) { pokemonNr = 1 } // das hier muss ich noch anpassen, faöös ich noch die Möglichkeit einbauen will nur durch die geladenen Pokemon durchzulaufen
   loadDetailCard(pokemonNr);
 }
+
+
 function prevPokemon() {
   pokemonNr--;
   if (pokemonNr < 1) { pokemonNr = 1010 }
@@ -80,28 +76,26 @@ function prevPokemon() {
 }
 
 function typeBorders(leftID, rightID) {
-  leftBorder(statsData.types[0].type.name, leftID);
-  rightBorder(statsData.types, statsData.types.length, rightID);
+  leftRightBorder(statsData.types, statsData.types.length, rightID);
+  leftRightBorder(statsData.types, statsData.types.length, leftID);
 }
 
-function leftBorder(pokeType1, leftID) {
-  document.getElementById(leftID).className = '';
-  document.getElementById(leftID).classList.add(pokeType1, 'typeContainer');
-  document.getElementById(leftID).innerText = pokeType1;
-  //console.log(pokeType1);
 
-}
-function rightBorder(pokeType, length, rightID) {
-  if (length > 1) {
-    document.getElementById(rightID).className = '';
-    document.getElementById(rightID).classList.add(pokeType[1].type.name, 'typeContainer');
-    document.getElementById(rightID).innerText = pokeType[1].type.name;
-  } else {
-    document.getElementById(rightID).className = '';
-    document.getElementById(rightID).classList.add(pokeType[0].type.name, 'typeContainer');
-    document.getElementById(rightID).innerText = pokeType[0].type.name;
+function leftRightBorder(pokeType, length, leftOrRightID) {
+  if (length > 1 && leftOrRightID === 'cardImgRightText') {
+    dataForBorder(pokeType, leftOrRightID, 1);
+  }
+  else {
+    dataForBorder(pokeType, leftOrRightID, 0);
   }
 }
+
+function dataForBorder(pokeType, leftOrRightID, eleNr) {
+  document.getElementById(leftOrRightID).className = '';
+  document.getElementById(leftOrRightID).classList.add(pokeType[eleNr].type.name, 'typeContainer');
+  document.getElementById(leftOrRightID).innerText = pokeType[eleNr].type.name;
+}
+
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // function block for left and right img border end
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -118,30 +112,30 @@ function getHeightAndWeight() {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // function block for abilities start
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-async function getPokeAbility(abilities) {
+function getPokeAbility(abilities) {
   if (abilities[0]) {
-    document.getElementById('ability1').innerText = abilities[0].ability.name;
-    let abilityDescription = await getAbilityDescription(abilities[0].ability.url);
-    document.getElementById('ability1').innerText += '\n' + abilityDescription;
+    dataForAbilities(abilities, 0);
   }
   if (abilities[1]) {
-    document.getElementById('ability2').innerText = abilities[1].ability.name;
-    let abilityDescription = await getAbilityDescription(abilities[1].ability.url);
-    document.getElementById('ability2').innerText += '\n' + abilityDescription;
+    dataForAbilities(abilities, 1);
   } else {
     return '';
   }
 }
 
+async function dataForAbilities(abilities, arrNr) {
+  document.getElementById('ability' + (arrNr + 1)).innerText = abilities[arrNr].ability.name;
+  let abilityDescription = await getAbilityDescription(abilities[arrNr].ability.url);
+  document.getElementById('ability' + (arrNr + 1)).innerText += '\n' + abilityDescription;
+}
+
 
 async function getAbilityDescription(abilityURL) {
-  const result = await fetchAbilityDescription(abilityURL); //await ABILITY_DESCR.json();
+  const result = await fetchAbilityDescription(abilityURL); 
   let abilityDescriptionTxt = '';
-  //das Problem hier: Wenn es mehr text gibt als in das div passt dann kann man den kompletten Text nicht mehr lesen
   for (let i = 0; i < result.effect_entries.length; i++) { // hier möchte ich eine besser schleife die do while oder while
     if (result.effect_entries[i].language.name === "en") {
       abilityDescriptionTxt = result.effect_entries[i].effect;
-      //console.log(abilityDescriptionTxt);
       return abilityDescriptionTxt.replace(/[\r\f\n]+/g, " ");
     }
   }
@@ -246,6 +240,7 @@ function polarChartOptions() {
 
 window.onclick = function (event) {
   const POPUP = document.getElementById('detailCard');
+  //console.log('klicket');
   if (event.target == POPUP) {
     console.log('in idCardContent geklicket');
     document.getElementById('detailCard').classList.add('d-none');
@@ -257,10 +252,3 @@ function hideDetailCard() {
   document.getElementById('detailCard').classList.add('d-none');
   document.getElementById('myBody').classList.remove('overflow-hidden');
 }
-
-
-
-
-
-
-
