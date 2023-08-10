@@ -21,3 +21,7 @@ async function fetchDetailData(pokemonNr) {
     const ABILITY_DESCR = await fetch(abilityURL);
     return await ABILITY_DESCR.json();
   } 
+
+
+
+  fdsfsd
