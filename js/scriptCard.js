@@ -62,17 +62,33 @@ function openSelectedInfo(number) {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // function block for left and right img border start
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
 function nextPokemon() {
-  pokemonNr++;
-  if (pokemonNr > 1010) { pokemonNr = 1 } // das hier muss ich noch anpassen, faöös ich noch die Möglichkeit einbauen will nur durch die geladenen Pokemon durchzulaufen
-  loadDetailCard(pokemonNr);
+  if (blockAddNewCardsForSearch === true) {
+    let index = searchCardObj.findIndex(pokemon => pokemon.pokId === pokemonNr);
+    index++;
+    index = (index === searchCardObj.length) ? 0 : index;
+    loadDetailCard(searchCardObj[index].pokId);
+  } else {
+    pokemonNr++;
+    if (pokemonNr > 1010) { pokemonNr = 1 } 
+    loadDetailCard(pokemonNr);
+  }
 }
 
 
 function prevPokemon() {
-  pokemonNr--;
-  if (pokemonNr < 1) { pokemonNr = 1010 }
-  loadDetailCard(pokemonNr);
+  if (blockAddNewCardsForSearch === true) {
+    let index = searchCardObj.findIndex(pokemon => pokemon.pokId === pokemonNr);
+    index--;
+    index = (index < 0) ? (searchCardObj.length - 1) : index;
+    loadDetailCard(searchCardObj[index].pokId);
+  } else {
+    pokemonNr--;
+    if (pokemonNr < 1) { pokemonNr = 1010 }
+    loadDetailCard(pokemonNr);
+  }
 }
 
 function typeBorders(leftID, rightID) {
@@ -131,7 +147,7 @@ async function dataForAbilities(abilities, arrNr) {
 
 
 async function getAbilityDescription(abilityURL) {
-  const result = await fetchAbilityDescription(abilityURL); 
+  const result = await fetchAbilityDescription(abilityURL);
   let abilityDescriptionTxt = '';
   for (let i = 0; i < result.effect_entries.length; i++) { // hier möchte ich eine besser schleife die do while oder while
     if (result.effect_entries[i].language.name === "en") {
