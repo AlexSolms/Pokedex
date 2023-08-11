@@ -1,0 +1,17 @@
+/* zen-kurenaido-regular - latin */
+@font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Zen Kurenaido';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/zen-kurenaido-v13-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  }
+
+  /* zcool-qingke-huangyou-regular - latin */
+@font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'ZCOOL QingKe HuangYou';
+    font-style: normal;
+    font-weight: 400;
+    src: url('./fonts/zcool-qingke-huangyou-v15-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  }

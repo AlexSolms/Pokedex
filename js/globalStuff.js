@@ -18,10 +18,9 @@ let startPokeID = 0;
 const options = {
     root: null, // the viewport is the root
     rootMargin: "0px",
-    threshold: 0.5, // Trigger, wenn 50% des Ziel-Elements sichtbar sind
-};
+    threshold: 0.5, // Trigger, if 50% target element in viewport
+}
 
-// Erstelle den IntersectionObserver mit der Callback-Funktion und den Optionen
 let observer = new IntersectionObserver(intersectionCallback, options);
 let targetElement = document.querySelector("#end-of-page");
 observer.observe(targetElement);
@@ -32,9 +31,7 @@ observer.observe(targetElement);
 document.addEventListener("DOMContentLoaded", function () {
     const navbarToggler = document.querySelector(".navbar-toggler");
     const navbarCollapse = document.querySelector(".navbar-collapse");
-    
     navbarToggler.addEventListener("click", function () {
-        navbarCollapse.classList.toggle("show");
-        
+        navbarCollapse.classList.toggle("show"); 
     });
 });

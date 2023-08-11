@@ -1,19 +1,9 @@
-/* //const POKE_API = [];
-let responseJson20Buket = '';
-let url = '';
-let pokemonNr = 1;
-let statsData = {};
-let pokeSpecialTxt = {};
-let blockForSearch = false; */
-
 
 async function loadDetailCard(numberPoke) {
   await fetchDetailData(numberPoke);
-  //console.log(statsData);
   await fetchDetailTxt(numberPoke);
   pokemonNr = numberPoke;
-  //console.log(await loadForTests());
-  cardHtml(); // das muss ich ändern. Ich will die Karte ansind in HTML schreiben und nur die Werte übergeben
+  cardHtml(); 
   document.getElementById('detailCard').classList.remove('d-none');
   document.getElementById('myBody').classList.add('overflow-hidden');
 }
