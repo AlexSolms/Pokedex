@@ -3,22 +3,16 @@ async function loadDetailCard(numberPoke) {
   await fetchDetailData(numberPoke);
   await fetchDetailTxt(numberPoke);
   pokemonNr = numberPoke;
-  cardHtml(); 
+  cardHtml();
   document.getElementById('detailCard').classList.remove('d-none');
   document.getElementById('myBody').classList.add('overflow-hidden');
 }
 
-//diese Funtion soll beim Start aufgerufen werden um die ersten 40 Pokemon zu rendern
-// Sie soll weiterhin eine Variable übergeben mit der nummer des zuletzt gerenderten Pokemon
-// zweck: damit ich diese Variable nutzen kann um das nächste bucket zu laden.
-function renderCardBucket() {
-  loadDetailCard(pokemonNr); //diese Funktion soll aufgerufen werden, wenn eine der Karten angeklickt wird.
-}
 
 function cardHtml() {
   document.getElementById('namePoke').innerText = firstLetterBig(statsData.name);
   typeBorders('cardImgLeftText', 'cardImgRightText');
-  openSelectedInfo(1);
+  openSelectedInfo(1); //default call
   getFavorTxt();
   getPokeAbility(statsData.abilities);
   getHeightAndWeight();
@@ -41,12 +35,13 @@ function getPicture() {
 //render menu -- info the user want to see
 function openSelectedInfo(number) {
   for (let i = 1; i < 5; i++) {
-    if (document.getElementById('menu' + i).classList.contains('d-none') && i === number) {
-      document.getElementById('menu' + i).classList.remove('d-none');
-    } else if (!document.getElementById('menu' + i).classList.contains('d-none') && i !== number)
+    if (!document.getElementById('menu' + i).classList.contains('d-none')){
       document.getElementById('menu' + i).classList.add('d-none');
-  }
-
+      document.getElementById('infoBtn' + i).classList.remove('infoBtnActive');
+    }
+   }
+  document.getElementById('menu' + number).classList.remove('d-none');
+  document.getElementById('infoBtn' + number).classList.add('infoBtnActive');
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -62,7 +57,7 @@ function nextPokemon() {
     loadDetailCard(searchCardObj[index].pokId);
   } else {
     pokemonNr++;
-    if (pokemonNr > 1010) { pokemonNr = 1 } 
+    if (pokemonNr > 1010) { pokemonNr = 1 }
     loadDetailCard(pokemonNr);
   }
 }
@@ -109,8 +104,8 @@ function dataForBorder(pokeType, leftOrRightID, eleNr) {
 // function block for pysical informations start
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function getHeightAndWeight() {
-  document.getElementById('pokeHeight').innerText = (statsData.height * 10) + 'cm';
-  document.getElementById('pokeWeight').innerText = (statsData.weight / 10) + 'kg';
+  document.getElementById('pokeHeight').innerText = 'Height: ' + (statsData.height * 10) + 'cm';
+  document.getElementById('pokeWeight').innerText = 'Weight: ' + (statsData.weight / 10) + 'kg';
 }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // function block for pysical informations end
@@ -130,16 +125,16 @@ function getPokeAbility(abilities) {
 }
 
 async function dataForAbilities(abilities, arrNr) {
-  document.getElementById('ability' + (arrNr + 1)).innerText = abilities[arrNr].ability.name;
+  document.getElementById('ability' + (arrNr + 1)).innerHTML = `<h5 class='abiliHead'>${abilities[arrNr].ability.name}</h5>`;
   let abilityDescription = await getAbilityDescription(abilities[arrNr].ability.url);
-  document.getElementById('ability' + (arrNr + 1)).innerText += '\n' + abilityDescription;
+  document.getElementById('ability' + (arrNr + 1)).innerHTML +=  `<p class="abiliText">${abilityDescription}</p>`;
 }
 
 
 async function getAbilityDescription(abilityURL) {
   const result = await fetchAbilityDescription(abilityURL);
   let abilityDescriptionTxt = '';
-  for (let i = 0; i < result.effect_entries.length; i++) { // hier möchte ich eine besser schleife die do while oder while
+  for (let i = 0; i < result.effect_entries.length; i++) { 
     if (result.effect_entries[i].language.name === "en") {
       abilityDescriptionTxt = result.effect_entries[i].effect;
       return abilityDescriptionTxt.replace(/[\r\f\n]+/g, " ");

@@ -23,8 +23,8 @@ async function render40Cards() {
     hideLoader(); //hides loading screen
 }
 
-function addDataToElementID(startNr, myCardArr) { //Wenn ich die hier aufrufe, dann 
-    for (let i = startNr; i < myCardArr.length; i++) { //cardObj.length  startPokeID + 40
+function addDataToElementID(startNr, myCardArr) { 
+    for (let i = startNr; i < myCardArr.length; i++) { 
         pokemonCard(myCardArr[i].pokId);
         document.getElementById('cardImgLeftTextOverview' + myCardArr[i].pokId).classList.add(myCardArr[i].pokType1.toLowerCase());
         document.getElementById('cardImgLeftTextOverview' + myCardArr[i].pokId).innerText = myCardArr[i].pokType1;

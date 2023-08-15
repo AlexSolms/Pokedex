@@ -7,8 +7,7 @@
     <title>Pokedex</title>
     <link rel="icon" type="image/x-icon" href="./pic/pokemon_ball.svg" />
 
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
-    <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
+     <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/fonts.css">
 
@@ -54,15 +53,12 @@
 
     <div class="backGround">
         <div id="fourtyBucket" class="d-flex justify-content-center flex-wrap gap-3 max_1334">
-            <!-- d-flex justify-content-center flex-wrap gap-3 -->
         </div>
     </div>
-    <!-- <button onclick="getStats()">klick</button> -->
-
 
     <div id="detailCard" class="myStartClass d-none">
-        <section id="test2" class="container p-0 cardMaxWidth">
-            <div id="idCardContent" class=" cardContent card bg-dark bg-gradient text-white">
+        <section id="test2" class="container p-0 cardMaxWidth d-flex align-items-center justify-content-center">
+            <div id="idCardContent" class="cardContent cardBorderRadius card bg-dark bg-gradient text-white">
                 <div class="">
                     <div id="idCardhead" class="card-head text-center">
                         <div class="d-flex justify-content-center">
@@ -90,29 +86,31 @@
 
                     </div>
                     <div class="cardStats card-text">
-                        <div id="infoMenu" class="d-flex justify-content-around">
-                            <h6 id="infoBtn1" role="button" onclick="openSelectedInfo(1)">dimensons</h6>
-                            <h6 id="infoBtn2" role="button" onclick="openSelectedInfo(2)">Background Information</h6>
-                            <h6 id="infoBtn3" role="button" onclick="openSelectedInfo(3)">Abilities</h6>
-                            <h6 id="infoBtn4" role="button" onclick="openSelectedInfo(4)">Stats</h6>
+                        <div id="infoMenu" class="btnBottomBorder d-flex justify-content-around align-items-center">
+                            <h6 id="infoBtn1" role="button" onclick="openSelectedInfo(1)" class="infoBtn infoBtnActive">Dimensons</h6>
+                            <h6 id="infoBtn2" role="button" onclick="openSelectedInfo(2)" class="infoBtn">Known Info</h6>
+                            <h6 id="infoBtn3" role="button" onclick="openSelectedInfo(3)" class="infoBtn">Abilities</h6>
+                            <h6 id="infoBtn4" role="button" onclick="openSelectedInfo(4)" class="infoBtn">Stats</h6>
                         </div>
-                        <div class="infoContentContainer overflow-auto text-center">
-                            <div class="firstInfo" id="menu1">
-                                <span>heigt: </span><span id="pokeHeight"></span><br>
-                                <span>weight: </span><span id="pokeWeight"></span><br>
+                        <div class="infoContentContainer overflow-auto ">
+                            <div class="firstInfo pt-4 d-flex justify-content-center" id="menu1">
+                                <div class="abiliText text-center">
+                                <h5 id="pokeHeight"></h5>
+                                <h5 id="pokeWeight"></h5>
+                                </div>
                             </div>
-                            <div class="secondInfo d-none" id="menu2">
-                                <div id="info2">
+                            <div class="secondInfo d-none d-flex justify-content-center pt-4" id="menu2">
+                                <div id="info2" class="abiliText">
                                 </div>
                             </div>
                             <div class="thirdInfo d-none" id="menu3">
-                                <span>ability 1: </span><br>
-                                <span id="ability1"></span><br>
-                                <span>ability 2: </span><br>
-                                <span id="ability2"></span><br>
+                                <!-- <h5 class="pt-1 text-center">Ability 1: </h5> -->
+                                <div id="ability1" class="d-flex flex-column align-items-center pt-4"></div>
+                                <!-- <h5 class="text-center">Ability 2: </h5> -->
+                                <div id="ability2" class="d-flex flex-column align-items-center"></div>
                             </div>
 
-                            <div class="fourthInfo d-none" id="menu4">
+                            <div class="fourthInfo d-none pt-4" id="menu4">
                                 <canvas id="polarChart"></canvas>
                             </div>
                         </div>
@@ -121,6 +119,10 @@
             </div>
         </section>
     </div>
+    <div class="scroll-to-top">
+        <img src="./pic/up-arrow.svg" alt="upIcon">
+      </div>
+      
     <footer id="end-of-page">
     </footer>
 </body>

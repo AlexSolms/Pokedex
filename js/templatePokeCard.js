@@ -24,7 +24,6 @@ function pokemonCard(pokemonID) {
 
 function impressum() {
     blockAddNewCardsForSearch = true;
-    //document.getElementById('fourtyBucket').innerHTML = '';
     let impressum = document.getElementById('fourtyBucket').innerHTML = /*html*/`
     <div class="Impressum flex justify-content-center mt-5 text-light">
         <h1>Impressum and Privacy Statement</h1>

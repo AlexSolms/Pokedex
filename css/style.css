@@ -97,7 +97,7 @@ nav{
 }
 
 .cardBorderRadius {
-   --bs-card-border-radius: 16px;
+   --bs-card-border-radius: 32px;
    --bs-border-width: none;
 }
 
@@ -169,6 +169,46 @@ nav{
    padding: 9px;
    justify-content: center;
    display: flex;
+}
+
+.infoBtn{
+   border-top: 1px solid wheat;
+   border-left: 1px solid wheat;
+   border-right: 1px solid wheat;
+   border-top-left-radius: 8px;
+   border-top-right-radius: 8px;
+   padding: 2px 7px 4px 7px;
+   margin-bottom: 0;
+}
+
+.infoBtn:hover{
+   
+   color: #7AC74C;
+}
+
+.infoBtnActive{
+   color: #7AC74C;
+}
+.btnBottomBorder{
+   border-bottom: 1px solid wheat;
+}
+
+.abiliHead{
+   background-color: #B7B7CE;
+   color: #000;
+   padding: 1px 4px 6px 4px;
+   border-radius: 8px;
+   text-shadow:none; 
+   font-family: 'Yusei Magic';
+}
+.abiliText{
+   max-width: 300px;
+   background-color: #B7B7CE;
+   color: #000;
+   padding: 1px 20px 6px 20px;
+   border-radius: 8px;
+   text-shadow:none; 
+   font-family: 'Yusei Magic';
 }
 
 
@@ -258,7 +298,7 @@ nav{
 }
 
 .cardMaxWidth {
-   max-width: 540px !important;
+   max-width: 458px !important;
 }
 
 .maxCardSize {
@@ -272,8 +312,9 @@ nav{
 
 
 .infoContentContainer::-webkit-scrollbar {
-   width: 6px;
+   width: 0px;
 }
+
 
 .infoContentContainer::-webkit-scrollbar-thumb {
    background: rgba(114, 2, 2, 0.959);
@@ -289,5 +330,11 @@ nav{
   height: 2em;
 }
 
-
+.scroll-to-top {
+   position: fixed;
+   bottom: 20px;
+   right: 20px;
+   cursor: pointer;
+   display: none;
+ }
 
