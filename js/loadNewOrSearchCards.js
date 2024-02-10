@@ -2,10 +2,10 @@
 // infinit load function start
 // comment: break if end of loadeable pokemon needs to be implemented
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-async function loadNext40Poke() {
+async function loadNext20Poke() {
     if (startPokeID > 1 && blockAddNewCardsForSearch === false) {
        // debugger;
-        const newContent = await render40Cards();
+        const newContent = await render20Cards();
         if (newContent != undefined) {
             document.getElementById("fourtyBucket").insertAdjacentHTML("beforeend", newContent);
         }
@@ -15,7 +15,7 @@ async function loadNext40Poke() {
 function intersectionCallback(entries, observer) {
     entries.forEach(function (entry) {
         if (entry.isIntersecting) {
-            loadNext40Poke();
+            loadNext20Poke();
         }
     });
 }

@@ -1,7 +1,7 @@
 
 
-async function fetch40Cards() {
-    for (let i = startPokeID; i < startPokeID + 40; i++) {
+async function fetch20Cards() {
+    for (let i = startPokeID; i < startPokeID + 20; i++) {
         await fetchDetailData(i + 1);
         cardObj[i] = {
             pokName: firstLetterBig(statsData.name),
@@ -13,13 +13,13 @@ async function fetch40Cards() {
     }
 }
 
-async function render40Cards() {
+async function render20Cards() {
 
     showLoader(); //showes loading screen
-    if (startPokeID === 0) { await fetch40Cards(); } //should run only when loading webpage the first time
-    addDataToElementID(startPokeID, cardObj); //renders next 40 pokemon cards
-    startPokeID = startPokeID + 40; //prepare startPokeID for the next 40 pokemon bucket
-    await fetch40Cards(); // fetches the next 40 pokemon cards
+    if (startPokeID === 0) { await fetch20Cards(); } //should run only when loading webpage the first time
+    addDataToElementID(startPokeID, cardObj); //renders next 20 pokemon cards
+    startPokeID = startPokeID + 20; //prepare startPokeID for the next 20 pokemon bucket
+    await fetch20Cards(); // fetches the next 20 pokemon cards
     hideLoader(); //hides loading screen
 }
 
