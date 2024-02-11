@@ -10,12 +10,13 @@ async function fetch20Cards() {
 function fillCardObj(){
     let k = 0;
     for (let i = startPokeID; i < startPokeID + 20; i++) {  
+        statsData = pokeData[k];
          cardObj[i] = {
-            pokName: firstLetterBig(pokeData[k].name),
-            pokId: pokeData[k].id,
-            pokImg: getPicture(pokeData[k]),
-            pokType1: firstLetterBig(pokeData[k].types[0].type.name),
-            pokType2: firstLetterBig(pokeData[k].types[1]?.type.name || pokeData[k].types[0].type.name)       
+            pokName: firstLetterBig(statsData.name),
+            pokId: statsData.id,
+            pokImg: getPicture(statsData),
+            pokType1: firstLetterBig(statsData.types[0].type.name),
+            pokType2: firstLetterBig(statsData.types[1]?.type.name || statsData.types[0].type.name)       
         } 
         k++;
     }

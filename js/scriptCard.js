@@ -1,6 +1,6 @@
 
 async function loadDetailCard(numberPoke) {
-  await fetchDetailData(numberPoke);
+  await fetchDetailCardData(numberPoke);
   await fetchDetailTxt(numberPoke);
   pokemonNr = numberPoke;
   cardHtml();
@@ -24,7 +24,7 @@ function firstLetterBig(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-function getPicture(statsData) {
+function getPicture() {
   if (statsData.sprites.other['dream_world'].front_default != null) {
     return statsData.sprites.other['dream_world'].front_default;
   } else {
