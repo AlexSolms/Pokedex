@@ -2,9 +2,11 @@
 let responseJson20Buket = '';
 let url = '';
 let pokemonNr = 1;
-let statsData = {};
+//let statsData = {};
+let pokeData = [];
 let pokeSpecialTxt = {};
 let blockAddNewCardsForSearch = false;
+
 
 // from scriptBucketOfCards.js
 let cardObj = [{ pokName: '',pokId: '', pokImg: '', pokType1: '', pokType2: '' }]; // for storage of neccessary data for each loaded card

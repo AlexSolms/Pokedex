@@ -3,23 +3,31 @@
 async function fetch20Cards() {
     for (let i = startPokeID; i < startPokeID + 20; i++) {
         await fetchDetailData(i + 1);
-        cardObj[i] = {
-            pokName: firstLetterBig(statsData.name),
-            pokId: statsData.id,
-            pokImg: getPicture(),
-            pokType1: firstLetterBig(statsData.types[0].type.name),
-            pokType2: firstLetterBig(statsData.types[1]?.type.name || statsData.types[0].type.name)
-        }
     }
+    fillCardObj();
+}
+
+function fillCardObj(){
+    let k = 0;
+    for (let i = startPokeID; i < startPokeID + 20; i++) {  
+         cardObj[i] = {
+            pokName: firstLetterBig(pokeData[k].name),
+            pokId: pokeData[k].id,
+            pokImg: getPicture(pokeData[k]),
+            pokType1: firstLetterBig(pokeData[k].types[0].type.name),
+            pokType2: firstLetterBig(pokeData[k].types[1]?.type.name || pokeData[k].types[0].type.name)       
+        } 
+        k++;
+    }
+    pokeData = [];
 }
 
 async function render20Cards() {
 
     showLoader(); //showes loading screen
-    if (startPokeID === 0) { await fetch20Cards(); } //should run only when loading webpage the first time
+    await fetch20Cards();  
     addDataToElementID(startPokeID, cardObj); //renders next 20 pokemon cards
     startPokeID = startPokeID + 20; //prepare startPokeID for the next 20 pokemon bucket
-    await fetch20Cards(); // fetches the next 20 pokemon cards
     hideLoader(); //hides loading screen
 }
 

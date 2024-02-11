@@ -1,7 +1,8 @@
 async function fetchDetailData(pokeID) {
     let urlStats = `https://pokeapi.co/api/v2/pokemon/${pokeID}`;
     let responseStats = await fetch(urlStats);
-    statsData = await responseStats.json();
+    console.log(responseStats);
+    pokeData.push(await responseStats.json());
   }
   
   

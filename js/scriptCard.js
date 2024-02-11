@@ -24,7 +24,7 @@ function firstLetterBig(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-function getPicture() {
+function getPicture(statsData) {
   if (statsData.sprites.other['dream_world'].front_default != null) {
     return statsData.sprites.other['dream_world'].front_default;
   } else {
