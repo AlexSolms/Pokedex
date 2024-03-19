@@ -6,6 +6,7 @@ let statsData = {};
 let pokeData = [];
 let pokeSpecialTxt = {};
 let blockAddNewCardsForSearch = false;
+const maxPokeID = 1024;
 
 
 // from scriptBucketOfCards.js

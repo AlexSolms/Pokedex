@@ -1,15 +1,28 @@
 
 
-async function fetch20Cards() {
-    for (let i = startPokeID; i < startPokeID + 20; i++) {
-        await fetchDetailData(i + 1);
+/* async function fetch20Cards() {
+    const fetchPromises = [];
+    for (let i = startPokeID; i < startPokeID + 151 && i <= maxPokeID; i++) {
+        fetchPromises.push(fetchDetailData(i + 1));
     }
+    await Promise.all(fetchPromises);
     fillCardObj();
+   
+}
+ */
+async function fetchCards(cardcount) {
+    const fetchPromises = [];
+    for (let i = startPokeID; i < startPokeID + cardcount && i <= maxPokeID; i++) {
+        fetchPromises.push(fetchDetailData(i + 1));
+    }
+    await Promise.all(fetchPromises);
+    fillCardObj(cardcount);
+   
 }
 
-function fillCardObj(){
+function fillCardObj(cardcount){
     let k = 0;
-    for (let i = startPokeID; i < startPokeID + 20; i++) {  
+    for (let i = startPokeID; i < startPokeID + cardcount && i <= maxPokeID; i++) {  
         statsData = pokeData[k];
          cardObj[i] = {
             pokName: firstLetterBig(statsData.name),
@@ -21,16 +34,27 @@ function fillCardObj(){
         k++;
     }
     pokeData = [];
+    cardObj = Object.values(cardObj).sort((a, b) => a.pokId - b.pokId);
 }
 
-async function render20Cards() {
-
-    showLoader(); //showes loading screen
-    await fetch20Cards();  
-    addDataToElementID(startPokeID, cardObj); //renders next 20 pokemon cards
-    startPokeID = startPokeID + 20; //prepare startPokeID for the next 20 pokemon bucket
-    hideLoader(); //hides loading screen
+async function renderCards(cardcount) {
+    showLoader(cardcount); 
+    await fetchCards(cardcount);  
+    addDataToElementID(startPokeID, cardObj); 
+    startPokeID = startPokeID + cardcount; 
+    hideLoader(); 
 }
+
+
+async function renderNextCards(cardcount) {
+    showLoader(); 
+    await fetchCards(cardcount); 
+    addDataToElementID(startPokeID, cardObj); 
+    startPokeID = startPokeID + cardcount; 
+    hideLoader(); 
+}
+
+
 
 function addDataToElementID(startNr, myCardArr) { 
     for (let i = startNr; i < myCardArr.length; i++) { 

@@ -71,7 +71,7 @@ function prevPokemon() {
     loadDetailCard(searchCardObj[index].pokId);
   } else {
     pokemonNr--;
-    if (pokemonNr < 1) { pokemonNr = 1010 }
+    if (pokemonNr < 1) { pokemonNr = 1025 }
     loadDetailCard(pokemonNr);
   }
 }

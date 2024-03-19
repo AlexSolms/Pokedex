@@ -1,16 +1,32 @@
+
 async function fetchDetailData(pokeID) {
-    let urlStats = `https://pokeapi.co/api/v2/pokemon/${pokeID}`;
-    let responseStats = await fetch(urlStats);
-    console.log(responseStats);
-    pokeData.push(await responseStats.json());
+  try {
+      let urlStats = `https://pokeapi.co/api/v2/pokemon/${pokeID}`;
+      let responseStats = await fetch(urlStats);
+
+      if (!responseStats.ok) {
+          throw new Error(`Fehler beim Abrufen der Daten. Statuscode: ${responseStats.status}`);
+      }
+      pokeData.push(await responseStats.json());
+  } catch (error) {
+      console.error(`Fehler beim Fetchen der Daten: ${error.message}`);
   }
+}
+ 
+
 
   async function fetchDetailCardData(pokeID) {
-    let urlStats = `https://pokeapi.co/api/v2/pokemon/${pokeID}`;
-    let responseStats = await fetch(urlStats);
-    statsData = await responseStats.json();
-  }
-  
+    try {
+        let urlStats = `https://pokeapi.co/api/v2/pokemon/${pokeID}`;
+        let responseStats = await fetch(urlStats);
+        if (!responseStats.ok) {
+            throw new Error(`Fehler beim Abrufen der Daten. Statuscode: ${responseStats.status}`);
+        }
+        statsData = await responseStats.json();
+    } catch (error) {
+        console.error(`Fehler beim Fetchen der Daten: ${error.message}`);
+    }
+}
   
   async function fetchDetailTxt(pokeID) {
     let urlDetailTxt = `https://pokeapi.co/api/v2/pokemon-species/${pokeID}`;
